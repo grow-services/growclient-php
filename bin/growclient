@@ -1,0 +1,19 @@
+#!/usr/bin/env php
+<?php
+
+// app/console
+
+use LinkORB\Component\Database\Command\InfoCommand;
+use Symfony\Component\Console\Application;
+
+require_once(__DIR__ . "/../vendor/autoload.php");
+
+
+$application = new Application('GROW Console Client', '0.0.1');
+$application->setCatchExceptions(true);
+$application->add(new \GrowChart\RestClient\Command\registerPregnancyCommand());
+// TODO: Add commands for rest:addMeasurement
+// TODO: Add commands for rest:getImage
+// TODO: Add commands for xml:registerPregnancy, xml:addMeasurement, etc
+// TODO: Add commands for soap:registerPregnancy, soap:addMeasurement, etc
+$application->run();
