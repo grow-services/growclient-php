@@ -1,13 +1,10 @@
 #!/usr/bin/env php
 <?php
+require_once(__DIR__ . "/../vendor/autoload.php");
 
 // app/console
 
-use LinkORB\Component\Database\Command\InfoCommand;
 use Symfony\Component\Console\Application;
-
-require_once(__DIR__ . "/../vendor/autoload.php");
-
 
 $application = new Application('GROW Console Client', '0.0.1');
 $application->setCatchExceptions(true);

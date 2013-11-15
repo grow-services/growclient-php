@@ -1,0 +1,14 @@
+{
+    "name": "linkorb/growclient",
+    "description": "GROW clinet",
+    "license": "proprietary",
+    "require": {
+        "symfony/console": "2.4.*@dev"
+    },
+    "bin": ["bin/growclient"],
+    "autoload": {
+        "psr-0": {
+            "GrowChart\\": "src/"
+        }
+    }
+}
