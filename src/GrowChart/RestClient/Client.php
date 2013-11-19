@@ -3,6 +3,7 @@
 namespace GrowChart\RestClient;
 
 use GrowChart\Common\Pregnancy;
+use GrowChart\Common\Measurement;
 
 class Client
 {
@@ -19,9 +20,14 @@ class Client
 
     public function setBaseUrl($baseurl)
     {
-        $this->baseurl = $baseurl;
+        $this->baseurl = rtrim($baseurl, '/');
     }
 
+    /**
+     * Register pregnancy.
+     * @param \GrowChart\Common\Pregnancy $pregnancy
+     * @return string
+     */
     public function registerPregnancy(Pregnancy $pregnancy)
     {
 
@@ -47,16 +53,26 @@ class Client
         return $res;
     }
 
-    public function addMeasurement()
+    /**
+     * Add measurement.
+     * @param \GrowChart\Common\Measurement $measurement
+     * @return string
+     */
+    public function addMeasurement(Measurement $measurement)
     {
         $data = array();
-        $this->buildQuery(
+        $data['date'] = $measurement->getDate();
+        $data['value'] = $measurement->getValue();
+        $data['type'] = $measurement->getType();
+        $data['growchartid'] = $measurement->getGrowchartid();
+        
+        $url = $this->buildQuery(
             '/addmeasurement/',
-            $this->generateToken($salt),
+            $this->generateToken($data['growchartid']),
             $data
         );
-        $url = $this->baseurl . '/addmeasurement/?licensekey=' . $this->userkey;
-        $url .= '&token=' . sha1();
+        $res = $this->httpRequest($url);
+        return $res;
     }
 
 
