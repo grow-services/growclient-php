@@ -11,7 +11,7 @@ $application = new Application('GROW Console Client', '0.0.1');
 $application->setCatchExceptions(true);
 $application->add(new Command\RegisterPregnancyCommand());
 $application->add(new Command\AddMeasurementCommand());
-// TODO: Add commands for rest:getImage
+$application->add(new Command\GetImageCommand());
 // TODO: Add commands for xml:registerPregnancy, xml:addMeasurement, etc
 // TODO: Add commands for soap:registerPregnancy, soap:addMeasurement, etc
 $application->run();
