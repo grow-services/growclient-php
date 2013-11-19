@@ -7,9 +7,11 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use GrowChart\RestClient\Client;
+use GrowChart\Common\Pregnancy;
+use GrowChart\Common\Ethnicity;
 use InvalidArgumentException;
 
-class registerPregnancyCommand extends Command
+class RegisterPregnancyCommand extends Command
 {
     protected function configure()
     {
@@ -80,28 +82,30 @@ class registerPregnancyCommand extends Command
         $reference = $input->getArgument('reference');
         $apisecret = $input->getArgument('apisecret');
         $apikey = $input->getArgument('apikey');
-        //        $firstname = $input->getArgument('firstname');
-        //        $lastname = $input->getArgument('lastname');
-        //        $edd = $input->getArgument('edd');
-        //        $growversion = $input->getArgument('growversion');
-        //        $parity = $input->getArgument('party');
-        //        $ethnicity = $input->getArgument('ethnicity');
-        //        $maternalheight = $input->getArgument('maternalheight');
-        //        $maternalweight = $input->getArgument('maternalweight');
-
+        
+        /*
+        $firstname = $input->getArgument('firstname');
+        $lastname = $input->getArgument('lastname');
+        $edd = $input->getArgument('edd');
+        $growversion = $input->getArgument('growversion');
+        $parity = $input->getArgument('party');
+        $ethnicity = $input->getArgument('ethnicity');
+        $maternalheight = $input->getArgument('maternalheight');
+        $maternalweight = $input->getArgument('maternalweight');
+        // */
+        
         $dialog = $this->getHelperSet()->get('dialog');
-        $bundleNames = array('AcmeDemoBundle', 'AcmeBlogBundle', 'AcmeStoreBundle');
         $firstname = $dialog->ask(
             $output,
-            '<info>Please enter the first name of mohter: </info>',
-            ''
+            '<info>Please enter the first name of mohter: </info>'
         );
         
         $lastname = $dialog->ask(
             $output,
-            '<info>Please enter the last name of mohter: </info>',
-            ''
+            '<info>Please enter the last name of mohter: </info>'
         );
+        
+        $maternaldob = $dialog->ask($output, '<info>Please entry the maternal dob (YYYYMMDD):</info>');
         
         $maternalheight = $dialog->askAndValidate(
             $output,
@@ -110,8 +114,10 @@ class registerPregnancyCommand extends Command
                 if (trim($value) == '') {
                     throw new InvalidArgumentException('The maternal height can not be empty');
                 }
+                return $value;
             }
         );
+        
         $maternalweight = $dialog->askAndValidate(
             $output,
             '<info>Please enter the maternal weight (kg): </info>',
@@ -119,6 +125,7 @@ class registerPregnancyCommand extends Command
                 if (trim($value) == '') {
                     throw new InvalidArgumentException('The maternal weight can not be empty');
                 }
+                return $value;
             }
         );
         
@@ -129,6 +136,7 @@ class registerPregnancyCommand extends Command
                 if (trim($value) == '') {
                     throw new InvalidArgumentException('The EDD can not be empty, and the format is YYYYMMDD');
                 }
+                return $value;
             }
         );
         
@@ -136,27 +144,47 @@ class registerPregnancyCommand extends Command
             $output,
             '<info>Please entry the parity: </info>',
             function ($value) {
-                if (trim($value) == '') {
+                if (trim($value) === '') {
                     throw new InvalidArgumentException('The parity can not be empty');
                 }
+                return $value;
             }
         );
         
-        $ethnics = array(
-            'Dutch',
-            'Dutched mixed',
-            'Moroccan',
-            'Ghanaian',
-            'Surinamese-Hindustani',
-            'Surinamese-Creole',
-            'Surinamese-Other'
-        );
-        
-        $ethnic = $dialog->select(
+        $ethnicity = $dialog->select(
             $output,
             '<info>Please entry the ethnic: </info>',
-            $ethnics
+            Ethnicity::getEthnicity()
         );
         
+        $version = array('NL2012', 'NL2013');
+        
+        $versionindex = $dialog->select(
+            $output,
+            '<info>Please entry the GROW version</info>',
+            $version
+        );
+        
+        $growversion = $version[$versionindex];
+
+        $preg = new Pregnancy();
+        $preg->setReference($reference);
+        $preg->setFirstname($firstname);
+        $preg->setLastname($lastname);
+        $preg->setEdd($edd);
+        $preg->setEthnicity($ethnicity);
+        $preg->setParity($parity);
+        $preg->setMaternaldob($maternaldob);
+        $preg->setMaternalheight($maternalheight);
+        $preg->setMaternalweight($maternalweight);
+        $preg->setGrowversion($growversion);
+        
+        $client = new Client($apikey, $apisecret);
+        
+        $client->setBaseUrl('http://linkorbapi.l.cn/api/grow/rest');
+        
+        $res = $client->registerPregnancy($preg);
+        //  $output->writeln($client->getQueryUrl());
+        $output->writeln($res);
     }
 }
