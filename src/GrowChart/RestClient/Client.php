@@ -12,6 +12,7 @@ class Client
     private $userkey = null;
     private $usersecret = null;
     private $queryurl = '';
+    private $isError = false;
 
     public function __construct($userkey, $usersecret)
     {
@@ -50,6 +51,7 @@ class Client
         $token = $this->generateToken($pregnancy->getReference());
         $url = $this->buildQuery('/registerpregnancy/', $token, $data);
         $res = $this->httpRequest($url);
+        $this->verifyResponse($res);
         //TODO: verify success
         return $res;
     }
@@ -76,6 +78,12 @@ class Client
         return $res;
     }
 
+    /**
+     * Get grow chart images.
+     * @param \GrowChart\Common\Chart $chart
+     * @param string $filename The image file name. if you want to get the image to local.
+     * @return string The grow chart image url.
+     */
     public function getChartImage(Chart $chart, $filename = null)
     {
         $data = array();
@@ -121,7 +129,11 @@ class Client
         return $this->queryurl = $url;
     }
 
-
+    /**
+     * http request.
+     * @param string $url
+     * @return string
+     */
     private function httpRequest($url)
     {
         $curl = curl_init();
@@ -131,8 +143,23 @@ class Client
         return curl_exec($curl);
     }
     
+    /**
+     * get query url.
+     * @return string
+     */
     public function getQueryUrl()
     {
         return $this->queryurl;
+    }
+    
+    public function verifyResponse($response)
+    {
+        
+    }
+
+
+    public function isError()
+    {
+        return $this->isError;
     }
 }
