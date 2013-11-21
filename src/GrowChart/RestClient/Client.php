@@ -5,6 +5,7 @@ namespace GrowChart\RestClient;
 use GrowChart\Common\Pregnancy;
 use GrowChart\Common\Measurement;
 use GrowChart\Common\Chart;
+use RuntimeException;
 
 class Client
 {
@@ -13,6 +14,8 @@ class Client
     private $usersecret = null;
     private $queryurl = '';
     private $isError = false;
+    private $errorCode;
+    private $errorMessage;
 
     public function __construct($userkey, $usersecret)
     {
@@ -28,7 +31,7 @@ class Client
     /**
      * Register pregnancy.
      * @param \GrowChart\Common\Pregnancy $pregnancy
-     * @return string
+     * @return string The grow chart id.
      */
     public function registerPregnancy(Pregnancy $pregnancy)
     {
@@ -51,7 +54,11 @@ class Client
         $token = $this->generateToken($pregnancy->getReference());
         $url = $this->buildQuery('/registerpregnancy/', $token, $data);
         $res = $this->httpRequest($url);
-        $this->verifyResponse($res);
+        $res = $this->verifyResponse($res);
+        
+        if ($this->isError) {
+            throw new RuntimeException($this->errorMessage, $this->errorCode);
+        }
         //TODO: verify success
         return $res;
     }
@@ -60,6 +67,7 @@ class Client
      * Add measurement.
      * @param \GrowChart\Common\Measurement $measurement
      * @return string
+     * @throws RuntimeException
      */
     public function addMeasurement(Measurement $measurement)
     {
@@ -75,6 +83,10 @@ class Client
             $data
         );
         $res = $this->httpRequest($url);
+        $res = $this->verifyResponse($res);
+        if ($this->isError) {
+            throw new RuntimeException($this->errorMessage, $this->errorCode);
+        }
         return $res;
     }
 
@@ -154,12 +166,30 @@ class Client
     
     public function verifyResponse($response)
     {
-        
+        if (($res = simplexml_load_string($response))) {
+            if (isset($res->code)) {
+                $this->errorCode = (string) $res->code;
+                $this->errorMessage = (string) $res->message;
+                $this->isError = true;
+            }
+            return (string) $res;
+        }
+        $this->isError = true;
     }
 
 
     public function isError()
     {
         return $this->isError;
+    }
+    
+    public function getErrorCode()
+    {
+        return $this->errorCode;
+    }
+
+    public function getErrorMessage()
+    {
+        return $this->errorMessage;
     }
 }

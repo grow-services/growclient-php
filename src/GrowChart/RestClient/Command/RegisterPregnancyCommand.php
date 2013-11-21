@@ -10,6 +10,7 @@ use GrowChart\RestClient\Client;
 use GrowChart\Common\Pregnancy;
 use GrowChart\Common\Ethnicity;
 use InvalidArgumentException;
+use Exception;
 
 class RegisterPregnancyCommand extends Command
 {
@@ -153,16 +154,18 @@ class RegisterPregnancyCommand extends Command
         
         $ethnicity = $dialog->select(
             $output,
-            '<info>Please entry the ethnic: </info>',
-            Ethnicity::getEthnicity()
+            '<info>Please entry the ethnic, default is 0: </info>',
+            Ethnicity::getEthnicity(),
+            0
         );
         
         $version = array('NL2012', 'NL2013');
         
         $versionindex = $dialog->select(
             $output,
-            '<info>Please entry the GROW version</info>',
-            $version
+            '<info>Please entry the GROW version, default is 1</info>',
+            $version,
+            1
         );
         
         $growversion = $version[$versionindex];
@@ -183,7 +186,12 @@ class RegisterPregnancyCommand extends Command
         
         $client->setBaseUrl('http://linkorbapi.l.cn/api/grow/rest');
         
-        $res = $client->registerPregnancy($preg);
+        try {
+            $res = $client->registerPregnancy($preg);
+        } catch (Exception $ex) {
+            $output->writeln('<error>' . $ex->getMessage() . '</error>');
+            exit;
+        }
         //  $output->writeln($client->getQueryUrl());
         $output->writeln($res);
     }
