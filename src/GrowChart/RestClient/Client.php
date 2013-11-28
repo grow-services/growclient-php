@@ -35,32 +35,14 @@ class Client
      */
     public function registerPregnancy(Pregnancy $pregnancy)
     {
-
-        $data = array();
-        $data['reference'] = $pregnancy->getReference();
-        $data['firstname'] = $pregnancy->getFirstname();
-        $data['lastname'] = $pregnancy->getLastname();
-        $data['reference'] = $pregnancy->getReference();
-        $data['firstname'] = $pregnancy->getFirstname();
-        $data['lastname'] = $pregnancy->getLastname();
-        $data['maternaldob'] = $pregnancy->getMaternaldob();
-        $data['maternalheight'] = $pregnancy->getMaternalheight() ;
-        $data['maternalweight'] = $pregnancy->getMaternalweight();
-        $data['growversion'] = $pregnancy->getGrowversion();
-        $data['edd'] = $pregnancy->getEdd();
-        $data['parity'] = $pregnancy->getParity();
-        $data['ethnicity'] = $pregnancy->getEthnicity();
-
-        $token = $this->generateToken($pregnancy->getReference());
-        $url = $this->buildQuery('/registerpregnancy/', $token, $data);
-        $res = $this->httpRequest($url);
-        $res = $this->verifyResponse($res);
-        
+        $token = $this->generateToken();
+        $url = $this->buildQuery('/rest/registerpregnancy/', $token, $pregnancy);
+        $res = $this->doRequest($url);
         if ($this->isError) {
             throw new RuntimeException($this->errorMessage, $this->errorCode);
         }
-        //TODO: verify success
-        return $res;
+        
+        return (string) $res->growchartid;
     }
 
     /**
@@ -71,19 +53,12 @@ class Client
      */
     public function addMeasurement(Measurement $measurement)
     {
-        $data = array();
-        $data['date'] = $measurement->getDate();
-        $data['value'] = $measurement->getValue();
-        $data['type'] = $measurement->getType();
-        $data['growchartid'] = $measurement->getGrowchartid();
-        
         $url = $this->buildQuery(
-            '/addmeasurement/',
-            $this->generateToken($data['growchartid']),
-            $data
+            '/rest/addmeasurement/',
+            $this->generateToken(),
+            $measurement
         );
-        $res = $this->httpRequest($url);
-        $res = $this->verifyResponse($res);
+        $res = $this->doRequest($url);
         if ($this->isError) {
             throw new RuntimeException($this->errorMessage, $this->errorCode);
         }
@@ -98,22 +73,24 @@ class Client
      */
     public function getChartImage(Chart $chart, $filename = null)
     {
-        $data = array();
-        $data['growchartid'] = $chart->getGrowchartid();
-        $data['language'] = $chart->getLanguage();
-        $data['width'] = $chart->getWidth();
-        $data['height'] = $chart->getHeight();
-        $data['format'] = $chart->getFormat();
         $url = $this->buildQuery(
-            '/getchartimage/',
-            $this->generateToken($data['growchartid']),
-            $data
+            '/rest/getchartimage/',
+            $this->generateToken(),
+            $chart
         );
+        
+        $res = $this->doRequest($url);
+        
+        if ($this->isError) {
+            throw new RuntimeException($this->errorMessage, $this->errorCode);
+        }
+        
+        $imageurl = (string) $res->url;
         if ($filename) {
-            $content = $this->httpRequest($url);
+            $content = $this->httpRequest($imageurl);
             file_put_contents($filename . '.' . $chart->getFormat(), $content);
         }
-        return $this->queryurl;
+        return $imageurl;
     }
 
     /**
@@ -121,19 +98,19 @@ class Client
      * @param string $salt
      * @return string
      */
-    public function generateToken($salt)
+    public function generateToken($salt = '')
     {
-        return sha1($this->usersecret . $salt);
+        return sha1($this->userkey . $this->usersecret . $salt);
     }
 
-        /**
+    /**
      * Build query url.
      * @param string $path
      * @param string $token
-     * @param array $data
+     * @param mixed $data
      * @return string $url
      */
-    private function buildQuery($path, $token, $data = array())
+    private function buildQuery($path, $token, $data)
     {
         $url = $this->baseurl . $path . '?licensekey=' . $this->userkey;
         $url .= '&token=' . $token;
@@ -172,7 +149,7 @@ class Client
                 $this->errorMessage = (string) $res->message;
                 $this->isError = true;
             }
-            return (string) $res;
+            return $res;
         }
         $this->isError = true;
     }
@@ -191,5 +168,11 @@ class Client
     public function getErrorMessage()
     {
         return $this->errorMessage;
+    }
+    
+    public function doRequest($url)
+    {
+        $response = $this->httpRequest($url);
+        return $this->verifyResponse($response);
     }
 }

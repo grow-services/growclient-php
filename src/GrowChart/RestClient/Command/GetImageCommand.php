@@ -47,6 +47,19 @@ class GetImageCommand extends Command
         
         $dialog = $this->getHelperSet()->get('dialog');
         $langs = Chart::getSupportedLanguage();
+        
+        $firstname = $dialog->ask(
+            $output,
+            '<info>Please enter the first name of mohter: </info>'
+        );
+        
+        $lastname = $dialog->ask(
+            $output,
+            '<info>Please enter the last name of mohter: </info>'
+        );
+        
+        $maternaldob = $dialog->ask($output, '<info>Please entry the maternal dob (YYYYMMDD):</info>');
+        
         $languageIndex = $dialog->select(
             $output,
             '<info>Please entry the chart language default is 0:</info>',
@@ -62,22 +75,16 @@ class GetImageCommand extends Command
             '750x450'
         );
         
-        /*
-        $format = $dialog->ask(
-            $output,
-            '<info>Please entry the chart image format, default is png:</info>',
-            'png'
-        );
-        */
-        
         $chart = new Chart();
         $chart->setGrowchartid($growchartid);
         $chart->setLanguage($language);
         $chart->setSize($size);
-        // $chart->setFormat($format);
+        $chart->setFirstname($firstname);
+        $chart->setLastname($lastname);
+        $chart->setMaternaldob($maternaldob);
         
         $client = new Client($apikey, $apisecret);
-        $client->setBaseUrl('http://linkorbapi.l.cn/api/grow/rest');
+        $client->setBaseUrl('http://linkorbapi.l.cn/api/grow/');
         $res = $client->getChartImage($chart, $filename);
         $output->writeln($res);
     }

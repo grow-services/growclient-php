@@ -30,83 +30,18 @@ class RegisterPregnancyCommand extends Command
                 'API Secret'
             )
             ->addArgument(
-                'reference',
-                InputArgument::REQUIRED,
-                'Reference'
+                'growchartid',
+                InputArgument::OPTIONAL,
+                'GROW chart id'
             );
-            /*
-            ->addArgument(
-                'maternalheight',
-                InputArgument::REQUIRED,
-                'Maternal height'
-            )
-            ->addArgument(
-                'maternalweight',
-                InputArgument::REQUIRED,
-                'Maternal weight'
-            )
-            ->addArgument(
-                'ethnicity',
-                InputArgument::REQUIRED,
-                'Ethnicity'
-            )
-            ->addArgument(
-                'parity',
-                InputArgument::REQUIRED,
-                'Parity'
-            )
-            ->addArgument(
-                'edd',
-                InputArgument::REQUIRED,
-                'EDD'
-            )
-            ->addArgument(
-                'growversion',
-                InputArgument::REQUIRED,
-                'GROW version'
-            )
-            ->addArgument(
-                'firstname',
-                InputArgument::OPTIONAL,
-                'Firstname'
-            )
-            ->addArgument(
-                'lastname',
-                InputArgument::OPTIONAL,
-                'Lastname'
-            )
-        ;*/
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $reference = $input->getArgument('reference');
         $apisecret = $input->getArgument('apisecret');
         $apikey = $input->getArgument('apikey');
         
-        /*
-        $firstname = $input->getArgument('firstname');
-        $lastname = $input->getArgument('lastname');
-        $edd = $input->getArgument('edd');
-        $growversion = $input->getArgument('growversion');
-        $parity = $input->getArgument('party');
-        $ethnicity = $input->getArgument('ethnicity');
-        $maternalheight = $input->getArgument('maternalheight');
-        $maternalweight = $input->getArgument('maternalweight');
-        // */
-        
         $dialog = $this->getHelperSet()->get('dialog');
-        $firstname = $dialog->ask(
-            $output,
-            '<info>Please enter the first name of mohter: </info>'
-        );
-        
-        $lastname = $dialog->ask(
-            $output,
-            '<info>Please enter the last name of mohter: </info>'
-        );
-        
-        $maternaldob = $dialog->ask($output, '<info>Please entry the maternal dob (YYYYMMDD):</info>');
         
         $maternalheight = $dialog->askAndValidate(
             $output,
@@ -171,20 +106,16 @@ class RegisterPregnancyCommand extends Command
         $growversion = $version[$versionindex];
 
         $preg = new Pregnancy();
-        $preg->setReference($reference);
-        $preg->setFirstname($firstname);
-        $preg->setLastname($lastname);
         $preg->setEdd($edd);
         $preg->setEthnicity($ethnicity);
         $preg->setParity($parity);
-        $preg->setMaternaldob($maternaldob);
         $preg->setMaternalheight($maternalheight);
         $preg->setMaternalweight($maternalweight);
-        $preg->setGrowversion($growversion);
+        $preg->setGrowchartversion($growversion);
         
         $client = new Client($apikey, $apisecret);
         
-        $client->setBaseUrl('http://linkorbapi.l.cn/api/grow/rest');
+        $client->setBaseUrl('http://linkorbapi.l.cn/api/grow/');
         
         try {
             $res = $client->registerPregnancy($preg);
@@ -192,7 +123,7 @@ class RegisterPregnancyCommand extends Command
             $output->writeln('<error>' . $ex->getMessage() . '</error>');
             exit;
         }
-        //  $output->writeln($client->getQueryUrl());
+        $output->writeln($client->getQueryUrl());
         $output->writeln($res);
     }
 }

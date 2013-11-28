@@ -4,35 +4,18 @@ namespace GrowChart\Common;
 
 class Pregnancy
 {
-    public $reference;
-    public $firstname;
-    public $lastname;
-    public $maternaldob;
+    public $growchartid;
     public $maternalheight;
     public $maternalweight;
-    public $growversion;
+    public $growchartversion;
     public $edd;
     public $parity = 0;
     public $ethnicity;
+    public $requestdate;
 
-    public function getReference()
+    public function getGrowchartid()
     {
-        return $this->reference;
-    }
-
-    public function getFirstname()
-    {
-        return $this->firstname;
-    }
-
-    public function getLastname()
-    {
-        return $this->lastname;
-    }
-
-    public function getMaternaldob()
-    {
-        return $this->maternaldob;
+        return $this->growchartid;
     }
 
     public function getMaternalheight()
@@ -45,9 +28,9 @@ class Pregnancy
         return $this->maternalweight;
     }
 
-    public function getGrowversion()
+    public function getGrowchartversion()
     {
-        return $this->growversion;
+        return $this->growchartversion;
     }
 
     public function getEdd()
@@ -65,24 +48,14 @@ class Pregnancy
         return $this->ethnicity;
     }
 
-    public function setReference($reference)
+    public function getRequestdate()
     {
-        $this->reference = $reference;
+        return $this->requestdate;
     }
 
-    public function setFirstname($firstname)
+    public function setGrowchartid($growchartid)
     {
-        $this->firstname = $firstname;
-    }
-
-    public function setLastname($lastname)
-    {
-        $this->lastname = $lastname;
-    }
-
-    public function setMaternaldob($maternaldob)
-    {
-        $this->maternaldob = $maternaldob;
+        $this->growchartid = $growchartid;
     }
 
     public function setMaternalheight($maternalheight)
@@ -95,9 +68,9 @@ class Pregnancy
         $this->maternalweight = $maternalweight;
     }
 
-    public function setGrowversion($growversion)
+    public function setGrowchartversion($growchartversion)
     {
-        $this->growversion = $growversion;
+        $this->growchartversion = $growchartversion;
     }
 
     public function setEdd($edd)
@@ -113,5 +86,10 @@ class Pregnancy
     public function setEthnicity($ethnicity)
     {
         $this->ethnicity = $ethnicity;
+    }
+
+    public function setRequestdate($requestdate)
+    {
+        $this->requestdate = $requestdate;
     }
 }

@@ -6,11 +6,14 @@ use InvalidArgumentException;
 
 class Chart
 {
-    private $width = 750;
-    private $height = 450;
-    private $format = 'png';
-    private $language = 'en_US';
-    private $growchartid;
+    public $firstname;
+    public $lastname;
+    public $maternaldob;
+    public $width = 750;
+    public $height = 450;
+    public $format = 'png';
+    public $language = 'en_US';
+    public $growchartid;
     
     private static $supportedLanguage = array('en_US', 'zh_CN', 'nl_NL');
 
@@ -79,5 +82,35 @@ class Chart
     public static function getSupportedLanguage()
     {
         return self::$supportedLanguage;
+    }
+    
+    public function getFirstname()
+    {
+        return $this->firstname;
+    }
+
+    public function getLastname()
+    {
+        return $this->lastname;
+    }
+
+    public function getMaternaldob()
+    {
+        return $this->maternaldob;
+    }
+
+    public function setFirstname($firstname)
+    {
+        $this->firstname = $firstname;
+    }
+
+    public function setLastname($lastname)
+    {
+        $this->lastname = $lastname;
+    }
+
+    public function setMaternaldob($maternaldob)
+    {
+        $this->maternaldob = $maternaldob;
     }
 }

@@ -6,10 +6,10 @@ use InvalidArgumentException;
 
 class Measurement
 {
-    private $growchartid;
-    private $value;
-    private $type;
-    private $date;
+    public $growchartid;
+    public $value;
+    public $type;
+    public $date;
     private static $measurementTypes = array('efw', 'fundalheight', 'birthweight');
 
     public function getGrowchartid()
