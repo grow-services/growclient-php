@@ -2,12 +2,13 @@
 
 namespace GrowChart\RestClient;
 
+use GrowChart\ClientInterface;
 use GrowChart\Common\Pregnancy;
 use GrowChart\Common\Measurement;
 use GrowChart\Common\Chart;
 use RuntimeException;
 
-class Client
+class Client implements ClientInterface
 {
     private $baseurl = "http://localhost.api/";
     private $userkey = null;
@@ -174,5 +175,20 @@ class Client
     {
         $response = $this->httpRequest($url);
         return $this->verifyResponse($response);
+    }
+
+    public function getData()
+    {
+        
+    }
+
+    public function getPDF()
+    {
+        
+    }
+
+    public function registerBirth()
+    {
+        
     }
 }
