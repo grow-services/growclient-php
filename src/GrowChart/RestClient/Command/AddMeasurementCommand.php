@@ -69,7 +69,6 @@ class AddMeasurementCommand extends Command
         $measurement->setGrowchartid($growchartid);
         
         $client = new Client($apikey, $apisecret);
-        $client->setBaseUrl('http://linkorbapi.l.cn/api/grow/');
         $res = $client->addMeasurement($measurement);
         // echo $client->getQueryUrl();
         $output->writeln($res);

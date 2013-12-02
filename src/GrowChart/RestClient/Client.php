@@ -10,7 +10,7 @@ use RuntimeException;
 
 class Client implements ClientInterface
 {
-    private $baseurl = "http://localhost.api/";
+    private $baseurl = "https://www.grow-services.net/api/grow";
     private $userkey = null;
     private $usersecret = null;
     private $queryurl = '';

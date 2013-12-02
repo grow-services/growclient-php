@@ -71,8 +71,8 @@ class GetImageCommand extends Command
         
         $size = $dialog->ask(
             $output,
-            '<info>Please entry the chart size, default is 750x450 (weight x heigth):</info>',
-            '750x450'
+            '<info>Please entry the chart size, default is 750x750 (weight x heigth):</info>',
+            '750x750'
         );
         
         $chart = new Chart();
@@ -84,7 +84,6 @@ class GetImageCommand extends Command
         $chart->setMaternaldob($maternaldob);
         
         $client = new Client($apikey, $apisecret);
-        $client->setBaseUrl('http://linkorbapi.l.cn/api/grow/');
         $res = $client->getChartImage($chart, $filename);
         $output->writeln($res);
     }
