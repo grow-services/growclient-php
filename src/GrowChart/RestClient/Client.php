@@ -2,21 +2,16 @@
 
 namespace GrowChart\RestClient;
 
-use GrowChart\ClientInterface;
+use GrowChart\BaseClient;
 use GrowChart\Common\Pregnancy;
 use GrowChart\Common\Measurement;
 use GrowChart\Common\Chart;
 use RuntimeException;
 
-class Client implements ClientInterface
+class Client extends BaseClient
 {
     private $baseurl = "http://localhost.api/";
-    private $userkey = null;
-    private $usersecret = null;
     private $queryurl = '';
-    private $isError = false;
-    private $errorCode;
-    private $errorMessage;
 
     public function __construct($userkey, $usersecret)
     {
@@ -37,7 +32,11 @@ class Client implements ClientInterface
     public function registerPregnancy(Pregnancy $pregnancy)
     {
         $token = $this->generateToken();
-        $url = $this->buildQuery('/rest/registerpregnancy/', $token, $pregnancy);
+        $url = $this->buildQuery(
+            '/rest/registerpregnancy/',
+            $token,
+            $pregnancy
+        );
         $res = $this->doRequest($url);
         if ($this->isError) {
             throw new RuntimeException($this->errorMessage, $this->errorCode);
@@ -94,15 +93,6 @@ class Client implements ClientInterface
         return $imageurl;
     }
 
-    /**
-     * Generate the token string.
-     * @param string $salt
-     * @return string
-     */
-    public function generateToken($salt = '')
-    {
-        return sha1($this->userkey . $this->usersecret . $salt);
-    }
 
     /**
      * Build query url.
@@ -155,22 +145,6 @@ class Client implements ClientInterface
         $this->isError = true;
     }
 
-
-    public function isError()
-    {
-        return $this->isError;
-    }
-    
-    public function getErrorCode()
-    {
-        return $this->errorCode;
-    }
-
-    public function getErrorMessage()
-    {
-        return $this->errorMessage;
-    }
-    
     public function doRequest($url)
     {
         $response = $this->httpRequest($url);

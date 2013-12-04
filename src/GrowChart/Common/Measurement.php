@@ -59,4 +59,14 @@ class Measurement
     {
         return self::$measurementTypes;
     }
+    
+    public function getSoapParams()
+    {
+        return array(
+            'growchartid' => $this->getGrowchartid(),
+            'date'        => $this->getDate(),
+            'type'        => $this->getType(),
+            'value'       => $this->getValue()
+        );
+    }
 }

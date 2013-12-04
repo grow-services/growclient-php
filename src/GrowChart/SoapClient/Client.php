@@ -2,8 +2,7 @@
 
 namespace GrowChart\SoapClient;
 
-use GrowChart\ClientInterface;
-use SoapClient;
+use GrowChart\BaseClient;
 use GrowChart\Common\Pregnancy;
 use GrowChart\Common\Measurement;
 use GrowChart\Common\Chart;
@@ -13,31 +12,52 @@ use GrowChart\Common\Chart;
  *
  * @author Cong Peijun <p.cong@linkorb.com>
  */
-class Client extends SoapClient implements ClientInterface
+class Client extends BaseClient
 {
-    private $wsdl = 'http://linkorbapi.l.cn/api/grow/soap/?wsdl';
+    const HEADER_NS = 'https://www.grow-services.net/api/grow/soap/';
+    private $wsdl = 'https://www.grow-services.net/api/grow/soap/?wsdl';
     private $client = null;
-    
-    
-    public function __construct($apikey, $apisecret)
+
+
+    public function call($function_name, $arguments)
+    {
+        try {
+            $response = $this->client->__soapCall($function_name, $arguments);
+            return $response;
+        } catch (\Exception $ex) {
+            $this->isError = true;
+            $this->errorCode = $ex->getCode();
+            $this->errorMessage = $ex->getMessage();
+            throw new \RuntimeException($this->errorMessage, $this->errorCode);
+        }
+    }
+
+
+    public function __construct($userkey, $usersecret)
     {
         $this->userkey = $userkey;
         $this->usersecret = $usersecret;
+        
+        $this->client = new \SoapClient($this->wsdl, array(
+            'cache_wsdl'   => 0,
+            'soap_version' => SOAP_1_2
+        ));
+        $authHeader = new \stdClass();
+        $authHeader->licensekey = $this->userkey;
+        $authHeader->token = $this->generateToken();
+        $header = new \SoapHeader(self::HEADER_NS, 'authenticate', $authHeader);
+        $this->client->__setSoapHeaders(array($header));
     }
     
-    public function getFunctions()
-    {
-        return $this->client->__getFunctions();
-    }
-
     public function addMeasurement(Measurement $measurement)
     {
-        
+        $this->call(__FUNCTION__, $measurement->getSoapParams());
     }
 
     public function getChartImage(Chart $chart, $filename = null)
     {
-        
+        $obj = $this->call(__FUNCTION__, $chart->getSoapParams());
+        return $obj->url;
     }
 
     public function getData()
@@ -55,11 +75,14 @@ class Client extends SoapClient implements ClientInterface
         
     }
 
+    /**
+     * Get the growchartid.
+     * @param \GrowChart\Common\Pregnancy $pregnancy
+     * @return string
+     */
     public function registerPregnancy(Pregnancy $pregnancy)
     {
-        $arguments = json_decode(json_encode($pregnancy), true);
-        $this->client->__soapCall(__FUNCTION__, $arguments);
-        $res = $this->client->__getLastResponse();
-        print_r($res);
+        $obj = $this->call('registerPregnancy', $pregnancy->getSoapParams());
+        return $obj->growchartid;
     }
 }

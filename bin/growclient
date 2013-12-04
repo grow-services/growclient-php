@@ -35,5 +35,6 @@ $application->add(new RestCommand\AddMeasurementCommand());
 $application->add(new RestCommand\GetImageCommand());
 // TODO: Add commands for xml:registerPregnancy, xml:addMeasurement, etc
 $application->add(new SoapCommand\RegisterPregnancyCommand());
+$application->add(new SoapCommand\GetImageCommand());
 // TODO: Add commands for soap:registerPregnancy, soap:addMeasurement, etc
 $application->run();

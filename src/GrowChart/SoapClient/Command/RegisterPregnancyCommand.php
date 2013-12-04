@@ -10,6 +10,7 @@ use GrowChart\SoapClient\Client;
 use Exception;
 use GrowChart\Common\Ethnicity;
 use GrowChart\Common\Pregnancy;
+use InvalidArgumentException;
 
 class RegisterPregnancyCommand extends Command
 {
@@ -120,7 +121,6 @@ class RegisterPregnancyCommand extends Command
             $output->writeln('<error>' . $ex->getMessage() . '</error>');
             exit;
         }
-        $output->writeln($client->getQueryUrl());
         $output->writeln($res);
     }
 }

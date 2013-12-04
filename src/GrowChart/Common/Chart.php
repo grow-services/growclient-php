@@ -14,7 +14,7 @@ class Chart
     public $format = 'png';
     public $language = 'en_US';
     public $growchartid;
-    
+
     private static $supportedLanguage = array('en_US', 'zh_CN', 'nl_NL');
 
 
@@ -112,5 +112,18 @@ class Chart
     public function setMaternaldob($maternaldob)
     {
         $this->maternaldob = $maternaldob;
+    }
+
+    public function getSoapParams()
+    {
+        return array(
+            'growchartid' => $this->getGrowchartid(),
+            'height'      => $this->getHeight(),
+            'width'       => $this->getWidth(),
+            'language'    => $this->getLanguage(),
+            'firstname'   => $this->getFirstname(),
+            'lastname'    => $this->getLanguage(),
+            'maternaldob' => $this->getMaternaldob()
+        );
     }
 }

@@ -11,7 +11,7 @@ class Pregnancy
     public $edd;
     public $parity = 0;
     public $ethnicity;
-    public $requestdate;
+    public $requestdate = null;
 
     public function getGrowchartid()
     {
@@ -91,5 +91,19 @@ class Pregnancy
     public function setRequestdate($requestdate)
     {
         $this->requestdate = $requestdate;
+    }
+    
+    public function getSoapParams()
+    {
+        $params = array();
+        $params['maternalheight'] = $this->getMaternalheight();
+        $params['maternalweight'] = $this->getMaternalweight();
+        $params['ethnicity'] = $this->getEthnicity();
+        $params['parity'] = $this->getParity();
+        $params['edd'] = $this->getEdd();
+        $params['growversion'] = $this->getGrowchartversion();
+        $params['growchartid'] = $this->getGrowchartid();
+        $params['requestdate'] = $this->getRequestdate();
+        return $params;
     }
 }
