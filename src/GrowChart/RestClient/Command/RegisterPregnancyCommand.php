@@ -115,8 +115,6 @@ class RegisterPregnancyCommand extends Command
         
         $client = new Client($apikey, $apisecret);
         
-        $client->setBaseUrl('http://linkorbapi.l.cn/api/grow/');
-        
         try {
             $res = $client->registerPregnancy($preg);
         } catch (Exception $ex) {

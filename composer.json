@@ -1,19 +1,27 @@
 {
-    "name": "linkorb/growclient",
-    "description": "GROW clinet",
+    "name": "grow-services/growclient-php",
+    "description": "GROW-Services.net client library for PHP",
+    "keywords": ["GROW", "pregnancy", "perinatal", "IUGR"],
     "license": "MIT",
+    "type": "library",
     "authors": [
         {
             "name": "Joost Faassen",
-            "email": "j.faassen@linkorb.com",
-            "role": "Development"
+            "email": "j.faassen@grow-services.net",
+            "homepage": "http://www.grow-services.net",
+            "role": "Developer"
         },
         {
             "name": "Cong Peijun",
             "email": "p.cong@linkorb.com",
+            "homepage": "http://www.linkorb.com",
             "role": "Developer"
         }
     ],
+    "support": {
+        "e-mail": "developer@grow-services.net",
+        "issues": "https://github.com/grow-services/growclient-php/issues"
+    },
     "require": {
         "symfony/console": "2.4.*@dev"
     },
