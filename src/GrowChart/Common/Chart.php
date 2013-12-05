@@ -12,10 +12,10 @@ class Chart
     public $width = 750;
     public $height = 450;
     public $format = 'png';
-    public $language = 'en_US';
+    public $language = 'en_Uk';
     public $growchartid;
 
-    private static $supportedLanguage = array('en_US', 'zh_CN', 'nl_NL');
+    private static $supportedLanguage = array('en_UK', 'zh_CN', 'nl_NL');
 
 
     public function getWidth()

@@ -6,6 +6,8 @@ use GrowChart\BaseClient;
 use GrowChart\Common\Pregnancy;
 use GrowChart\Common\Measurement;
 use GrowChart\Common\Chart;
+use GrowChart\Common\ChartPdf;
+use GrowChart\Common\Birth;
 
 /**
  * GROW chart soap client.
@@ -60,21 +62,6 @@ class Client extends BaseClient
         return $obj->url;
     }
 
-    public function getData()
-    {
-        
-    }
-
-    public function getPDF()
-    {
-        
-    }
-
-    public function registerBirth()
-    {
-        
-    }
-
     /**
      * Get the growchartid.
      * @param \GrowChart\Common\Pregnancy $pregnancy
@@ -84,5 +71,20 @@ class Client extends BaseClient
     {
         $obj = $this->call('registerPregnancy', $pregnancy->getSoapParams());
         return $obj->growchartid;
+    }
+
+    public function getData($growchartid)
+    {
+        
+    }
+
+    public function getPDF(ChartPdf $chartpdf, $filename = null)
+    {
+        
+    }
+
+    public function registerBirth(Birth $bith)
+    {
+        
     }
 }

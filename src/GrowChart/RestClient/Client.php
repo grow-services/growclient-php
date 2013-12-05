@@ -6,6 +6,8 @@ use GrowChart\BaseClient;
 use GrowChart\Common\Pregnancy;
 use GrowChart\Common\Measurement;
 use GrowChart\Common\Chart;
+use GrowChart\Common\Birth;
+use GrowChart\Common\ChartPdf;
 use RuntimeException;
 
 class Client extends BaseClient
@@ -151,17 +153,17 @@ class Client extends BaseClient
         return $this->verifyResponse($response);
     }
 
-    public function getData()
+    public function getData($growchartid)
     {
         
     }
 
-    public function getPDF()
+    public function getPDF(ChartPdf $chartpdf, $filename = null)
     {
         
     }
 
-    public function registerBirth()
+    public function registerBirth(Birth $bith)
     {
         
     }
