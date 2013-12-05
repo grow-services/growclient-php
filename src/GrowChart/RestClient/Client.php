@@ -11,8 +11,6 @@ use RuntimeException;
 class Client extends BaseClient
 {
     private $baseurl = "https://www.grow-services.net/api/grow";
-    private $userkey = null;
-    private $usersecret = null;
     private $queryurl = '';
 
     public function __construct($userkey, $usersecret)
