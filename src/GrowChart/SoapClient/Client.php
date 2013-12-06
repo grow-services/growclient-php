@@ -53,12 +53,12 @@ class Client extends BaseClient
     
     public function addMeasurement(Measurement $measurement)
     {
-        $this->call(__FUNCTION__, $measurement->getSoapParams());
+        $this->call('addMeasurement', $measurement->getSoapParams());
     }
 
     public function getChartImage(Chart $chart, $filename = null)
     {
-        $obj = $this->call(__FUNCTION__, $chart->getSoapParams());
+        $obj = $this->call('getChartImage', $chart->getSoapParams());
         return $obj->url;
     }
 
@@ -75,16 +75,18 @@ class Client extends BaseClient
 
     public function getData($growchartid)
     {
-        
+        return $this->call('getData', array('growchartid' => $growchartid));
     }
 
-    public function getPDF(ChartPdf $chartpdf, $filename = null)
+    public function getPDF(ChartPdf $chartpdf)
     {
-        
+        $obj = $this->call('getPdf', $chartpdf->getSoapParams());
+        return $obj->url;
     }
 
     public function registerBirth(Birth $bith)
     {
+        return $this->call('registerBirth', $bith->getSoapParams());
         
     }
 }

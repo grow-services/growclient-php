@@ -21,6 +21,10 @@ class Client extends BaseClient
         $this->usersecret = $usersecret;
     }
 
+    /**
+     * Set api server url.
+     * @param type $baseurl
+     */
     public function setBaseUrl($baseurl)
     {
         $this->baseurl = rtrim($baseurl, '/');
@@ -50,7 +54,7 @@ class Client extends BaseClient
     /**
      * Add measurement.
      * @param \GrowChart\Common\Measurement $measurement
-     * @return string
+     * @return \SimpleXMLElement
      * @throws RuntimeException
      */
     public function addMeasurement(Measurement $measurement)
@@ -126,6 +130,7 @@ class Client extends BaseClient
     }
     
     /**
+     * Get the query url.
      * get query url.
      * @return string
      */
@@ -134,6 +139,11 @@ class Client extends BaseClient
         return $this->queryurl;
     }
     
+    /**
+     * Verify the request response.
+     * @param string $response
+     * @return \SimpleXMLElement
+     */
     public function verifyResponse($response)
     {
         if (($res = simplexml_load_string($response))) {
@@ -153,18 +163,76 @@ class Client extends BaseClient
         return $this->verifyResponse($response);
     }
 
+    /**
+     * Get the grow chart data.
+     * @param string $growchartid
+     * @return \SimpleXMLElement
+     * @throws RuntimeException
+     */
     public function getData($growchartid)
     {
+        $url = $this->buildQuery(
+            '/rest/getdata/',
+            $this->generateToken(),
+            array('growchartid' => $growchartid)
+        );
         
+        $res = $this->doRequest($url);
+        
+        if ($this->isError) {
+            throw new RuntimeException($this->errorMessage, $this->errorCode);
+        }
+        return $res;
     }
 
+    /**
+     * Get GROW pdf.
+     * @param \GrowChart\Common\ChartPdf $chartpdf
+     * @param string $filename If the file name is set, you can get a pdf file with given name.
+     * @return \SimpleXMLElement
+     * @throws RuntimeException
+     */
     public function getPDF(ChartPdf $chartpdf, $filename = null)
     {
+        $url = $this->buildQuery(
+            '/rest/getpdf/',
+            $this->generateToken(),
+            $chartpdf
+        );
         
+        $res = $this->doRequest($url);
+        
+        if ($this->isError) {
+            throw new RuntimeException($this->errorMessage, $this->errorCode);
+        }
+        
+        $pdfurl = (string) $res->url;
+        if ($filename) {
+            $content = $this->httpRequest($pdfurl);
+            file_put_contents($filename, $content);
+        }
+        return $pdfurl;
     }
 
+    /**
+     * Register birth.
+     * @param \GrowChart\Common\Birth $bith
+     * @return \SimpleXMLElement
+     * @throws RuntimeException
+     */
     public function registerBirth(Birth $bith)
     {
+        $url = $this->buildQuery(
+            '/rest/registerbirth/',
+            $this->generateToken(),
+            $bith
+        );
         
+        $res = $this->doRequest($url);
+        
+        if ($this->isError) {
+            throw new RuntimeException($this->errorMessage, $this->errorCode);
+        }
+        return $res;
     }
 }

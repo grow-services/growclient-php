@@ -15,6 +15,21 @@ class ChartPdf
     public $babygestation;
     public $babybirthweight;
     
+    public function getSoapParams()
+    {
+        return array(
+            'growchartid'       => $this->growchartid,
+            'firstname'         => $this->firstname,
+            'lastname'          => $this->lastname,
+            'maternaldob'       => $this->maternaldob,
+            'maternalreference' => $this->maternalreference,
+            'babyname'          => $this->babyname,
+            'babygender'        => $this->babygender,
+            'babygestation'     => $this->babygestation,
+            'babybirthweight'   => $this->babybirthweight
+        );
+    }
+
     public function getGrowchartid()
     {
         return $this->growchartid;
