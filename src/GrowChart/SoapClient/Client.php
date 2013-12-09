@@ -84,9 +84,9 @@ class Client extends BaseClient
         return $obj->url;
     }
 
-    public function registerBirth(Birth $bith)
+    public function registerBirth(Birth $birth)
     {
-        return $this->call('registerBirth', $bith->getSoapParams());
+        return $this->call('registerBirth', $birth->getSoapParams());
         
     }
 }

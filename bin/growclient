@@ -33,6 +33,10 @@ $application->setCatchExceptions(true);
 $application->add(new RestCommand\RegisterPregnancyCommand());
 $application->add(new RestCommand\AddMeasurementCommand());
 $application->add(new RestCommand\GetImageCommand());
+$application->add(new RestCommand\RegisterBirthCommand());
+$application->add(new RestCommand\GetDataCommand());
+$application->add(new RestCommand\GetPdfCommand());
+
 // TODO: Add commands for xml:registerPregnancy, xml:addMeasurement, etc
 $application->add(new SoapCommand\RegisterPregnancyCommand());
 $application->add(new SoapCommand\GetImageCommand());

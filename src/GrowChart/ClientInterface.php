@@ -21,7 +21,7 @@ interface ClientInterface
 
     public function getChartImage(Chart $chart, $filename = null);
 
-    public function registerBirth(Birth $bith);
+    public function registerBirth(Birth $birth);
 
     public function getData($growchartid);
 

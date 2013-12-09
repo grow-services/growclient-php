@@ -109,7 +109,7 @@ class Client extends BaseClient
      */
     private function buildQuery($path, $token, $data)
     {
-        $url = $this->baseurl . $path . '?licensekey=' . $this->userkey;
+        $url = rtrim($this->baseurl, '/') . $path . '?licensekey=' . $this->userkey;
         $url .= '&token=' . $token;
         $url .= '&' . http_build_query($data);
         return $this->queryurl = $url;
@@ -216,16 +216,16 @@ class Client extends BaseClient
 
     /**
      * Register birth.
-     * @param \GrowChart\Common\Birth $bith
+     * @param \GrowChart\Common\Birth $birth
      * @return \SimpleXMLElement
      * @throws RuntimeException
      */
-    public function registerBirth(Birth $bith)
+    public function registerBirth(Birth $birth)
     {
         $url = $this->buildQuery(
             '/rest/registerbirth/',
             $this->generateToken(),
-            $bith
+            $birth
         );
         
         $res = $this->doRequest($url);
