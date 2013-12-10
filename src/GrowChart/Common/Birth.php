@@ -9,6 +9,7 @@ class Birth
     public $babydob;
     public $birthgestation;
     public $birthweight;
+    public $birthheight;
     public $babygender;
     public $antenataliugrdetection;
 
@@ -81,5 +82,15 @@ class Birth
     public function setAntenataliugrdetection($antenataliugrdetection)
     {
         $this->antenataliugrdetection = $antenataliugrdetection;
+    }
+    
+    public function getBirthheight()
+    {
+        return $this->birthheight;
+    }
+
+    public function setBirthheight($birthheight)
+    {
+        $this->birthheight = $birthheight;
     }
 }

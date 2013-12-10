@@ -61,6 +61,11 @@ class RegisterBirthCommand extends Command
             $output,
             '<info>Please entry baby weight(g):</info>'
         );
+        
+        $birthheight = $dialog->ask(
+            $output,
+            '<info>Please entry baby heigth(cm):</info>'
+        );
 
         $birthgestation = $dialog->ask(
             $output,
@@ -82,6 +87,7 @@ class RegisterBirthCommand extends Command
         $birth->setBabygender($babygender);
         $birth->setBirthgestation($birthgestation);
         $birth->setBirthweight($birthweight);
+        $birth->setBirthheight($birthheight);
         $birth->setGrowchartid($growchartid);
 
         try {
