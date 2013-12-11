@@ -14,6 +14,7 @@ class Chart
     public $format = 'png';
     public $language = 'en_Uk';
     public $growchartid;
+    public $reference;
 
     private static $supportedLanguage = array('en_UK', 'zh_CN', 'nl_NL');
 
@@ -114,10 +115,21 @@ class Chart
         $this->maternaldob = $maternaldob;
     }
 
+    public function getReference()
+    {
+        return $this->reference;
+    }
+
+    public function setReference($reference)
+    {
+        $this->reference = $reference;
+    }
+
     public function getSoapParams()
     {
         return array(
             'growchartid' => $this->getGrowchartid(),
+            'reference' => $this->getReference(),
             'height'      => $this->getHeight(),
             'width'       => $this->getWidth(),
             'language'    => $this->getLanguage(),

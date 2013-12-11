@@ -12,6 +12,7 @@ class Birth
     public $birthheight;
     public $babygender;
     public $antenataliugrdetection;
+    public $babyname;
 
     public function getSoapParams()
     {
@@ -19,8 +20,11 @@ class Birth
             'growchartid'            => $this->growchartid,
             'babydob'                => $this->babydob,
             'birthgestation'         => $this->birthgestation,
-            'birthweight'            => $this->babygender,
-            'antenataliugrdetection' => $this->antenataliugrdetection
+            'birthweight'            => $this->birthweight,
+            'birthweight'            => $this->birthheight,
+            'babygender'             => $this->babygender,
+            'antenataliugrdetection' => $this->antenataliugrdetection,
+            'babyname'               => $this->babyname
         );
     }
 
@@ -92,5 +96,15 @@ class Birth
     public function setBirthheight($birthheight)
     {
         $this->birthheight = $birthheight;
+    }
+    
+    public function getBabyName()
+    {
+        return $this->babyname;
+    }
+
+    public function setBabyName($babyname)
+    {
+        $this->babyname = $babyname;
     }
 }
