@@ -1,32 +1,21 @@
 <?php
 
-namespace GrowChart\SoapClient\Command;
+namespace GrowChart\Command;
 
-use Symfony\Component\Console\Command\Command;
+use GrowChart\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use GrowChart\Common\Chart;
-use GrowChart\SoapClient\Client;
-use Exception;
 
 class GetImageCommand extends Command
 {
 
     protected function configure()
     {
-        $this->setName('soap:getimage')
+        parent::configure();
+        $this->setName('grow:getimage')
             ->setDescription('Get GROW image.')
-            ->addArgument(
-                'apikey',
-                InputArgument::REQUIRED,
-                'API Key'
-            )
-            ->addArgument(
-                'apisecret',
-                InputArgument::REQUIRED,
-                'API Secret'
-            )
             ->addArgument(
                 'growchartid',
                 InputArgument::REQUIRED,
@@ -41,8 +30,7 @@ class GetImageCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $apikey = $input->getArgument('apikey');
-        $apisecret = $input->getArgument('apisecret');
+        parent::execute($input, $output);
         $growchartid = $input->getArgument('growchartid');
         $filename = $input->getArgument('filename');
         
@@ -59,6 +47,11 @@ class GetImageCommand extends Command
             '<info>Please enter the last name of mohter: </info>'
         );
         
+        $reference = $dialog->ask(
+            $output,
+            '<info>Please entry maternal reference:</info>'
+        );
+        
         $maternaldob = $dialog->ask($output, '<info>Please entry the maternal dob (YYYYMMDD):</info>');
         
         $languageIndex = $dialog->select(
@@ -72,8 +65,8 @@ class GetImageCommand extends Command
         
         $size = $dialog->ask(
             $output,
-            '<info>Please entry the chart size, default is 750x450 (weight x heigth):</info>',
-            '750x450'
+            '<info>Please entry the chart size, default is 750x750 (weight x heigth):</info>',
+            '750x750'
         );
         
         $chart = new Chart();
@@ -83,14 +76,9 @@ class GetImageCommand extends Command
         $chart->setFirstname($firstname);
         $chart->setLastname($lastname);
         $chart->setMaternaldob($maternaldob);
+        $chart->setReference($reference);
         
-        $client = new Client($apikey, $apisecret);
-        try {
-            $res = $client->getChartImage($chart, $filename);
-        } catch (Exception $ex) {
-            $output->writeln('<error>' . $ex->getMessage() . '</error>');
-        }
-        
+        $res = $this->client->getChartImage($chart, $filename);
         $output->writeln($res);
     }
 }

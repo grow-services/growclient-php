@@ -25,20 +25,14 @@ if (!file_exists($loader)) {
 require $loader;
 
 use Symfony\Component\Console\Application;
-use GrowChart\RestClient\Command as RestCommand;
-use GrowChart\SoapClient\Command as SoapCommand;
+use GrowChart\Command;
 
 $application = new Application('GROW Console Client', '0.0.1');
 $application->setCatchExceptions(true);
-$application->add(new RestCommand\RegisterPregnancyCommand());
-$application->add(new RestCommand\AddMeasurementCommand());
-$application->add(new RestCommand\GetImageCommand());
-$application->add(new RestCommand\RegisterBirthCommand());
-$application->add(new RestCommand\GetDataCommand());
-$application->add(new RestCommand\GetPdfCommand());
-
-// TODO: Add commands for xml:registerPregnancy, xml:addMeasurement, etc
-$application->add(new SoapCommand\RegisterPregnancyCommand());
-$application->add(new SoapCommand\GetImageCommand());
-// TODO: Add commands for soap:registerPregnancy, soap:addMeasurement, etc
+$application->add(new Command\RegisterPregnancyCommand());
+$application->add(new Command\AddMeasurementCommand());
+$application->add(new Command\GetImageCommand());
+$application->add(new Command\RegisterBirthCommand());
+$application->add(new Command\GetDataCommand());
+$application->add(new Command\GetPdfCommand());
 $application->run();

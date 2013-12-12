@@ -1,12 +1,11 @@
 <?php
 
-namespace GrowChart\RestClient\Command;
+namespace GrowChart\Command;
 
-use Symfony\Component\Console\Command\Command;
+use GrowChart\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputArgument;
-use GrowChart\RestClient\Client;
 use Exception;
 
 /**
@@ -18,18 +17,9 @@ class GetDataCommand extends Command
 {
     protected function configure()
     {
-        $this->setName('rest:getdata')
+        parent::configure();
+        $this->setName('grow:getdata')
             ->setDescription('Get data centile')
-            ->addArgument(
-                'apikey',
-                InputArgument::REQUIRED,
-                'API Key'
-            )
-            ->addArgument(
-                'apisecret',
-                InputArgument::REQUIRED,
-                'API Secret'
-            )
             ->addArgument(
                 'growchartid',
                 InputArgument::REQUIRED,
@@ -39,17 +29,15 @@ class GetDataCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $apikey = $input->getArgument('apikey');
-        $apisecret = $input->getArgument('apisecret');
+        parent::execute($input, $output);
         $growchartid = $input->getArgument('growchartid');
         
-        $client = new Client($apikey, $apisecret);
 
         try {
-            $data = $client->getData($growchartid);
+            $data = $this->client->getData($growchartid);
         } catch (Exception $ex) {
             $output->writeln('<error>' . $ex->getMessage() . '</error>');
         }
-        $output->writeln($data->asXML());
+        print_r(json_decode(json_encode($data)));
     }
 }

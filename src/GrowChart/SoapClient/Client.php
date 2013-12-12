@@ -78,7 +78,7 @@ class Client extends BaseClient
         return $this->call('getData', array('growchartid' => $growchartid));
     }
 
-    public function getPDF(ChartPdf $chartpdf)
+    public function getPDF(ChartPdf $chartpdf, $filename = null)
     {
         $obj = $this->call('getPdf', $chartpdf->getSoapParams());
         return $obj->url;

@@ -1,34 +1,24 @@
 <?php
 
-namespace GrowChart\SoapClient\Command;
+namespace GrowChart\Command;
 
-use Symfony\Component\Console\Command\Command;
+use GrowChart\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use GrowChart\SoapClient\Client;
-use Exception;
-use GrowChart\Common\Ethnicity;
 use GrowChart\Common\Pregnancy;
+use GrowChart\Common\Ethnicity;
 use InvalidArgumentException;
+use Exception;
 
 class RegisterPregnancyCommand extends Command
 {
     protected function configure()
     {
+        parent::configure();
         $this
-            ->setName('soap:registerpregnancy')
+            ->setName('grow:registerpregnancy')
             ->setDescription('Register a pregnancy')
-            ->addArgument(
-                'apikey',
-                InputArgument::REQUIRED,
-                'API Key'
-            )
-            ->addArgument(
-                'apisecret',
-                InputArgument::REQUIRED,
-                'API Secret'
-            )
             ->addArgument(
                 'growchartid',
                 InputArgument::OPTIONAL,
@@ -38,8 +28,7 @@ class RegisterPregnancyCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $apisecret = $input->getArgument('apisecret');
-        $apikey = $input->getArgument('apikey');
+        parent::execute($input, $output);
         
         $dialog = $this->getHelperSet()->get('dialog');
         
@@ -113,14 +102,13 @@ class RegisterPregnancyCommand extends Command
         $preg->setMaternalweight($maternalweight);
         $preg->setGrowchartversion($growversion);
         
-        $client = new Client($apikey, $apisecret);
-        
+        $client = $this->client;
         try {
             $res = $client->registerPregnancy($preg);
         } catch (Exception $ex) {
             $output->writeln('<error>' . $ex->getMessage() . '</error>');
             exit;
         }
-        $output->writeln($res);
+        $output->writeln('<info>Growchartid: </info>' . $res);
     }
 }

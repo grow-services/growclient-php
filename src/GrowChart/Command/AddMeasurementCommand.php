@@ -1,31 +1,22 @@
 <?php
 
-namespace GrowChart\RestClient\Command;
+namespace GrowChart\Command;
 
-use Symfony\Component\Console\Command\Command;
+use GrowChart\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use GrowChart\Common\Measurement;
-use GrowChart\RestClient\Client;
+use Exception;
 
 class AddMeasurementCommand extends Command
 {
 
     protected function configure()
     {
-        $this->setName('rest:addmeasurement')
+        parent::configure();
+        $this->setName('grow:addmeasurement')
             ->setDescription('Add measurements')
-            ->addArgument(
-                'apikey',
-                InputArgument::REQUIRED,
-                'API Key'
-            )
-            ->addArgument(
-                'apisecret',
-                InputArgument::REQUIRED,
-                'API Secret'
-            )
             ->addArgument(
                 'growchartid',
                 InputArgument::REQUIRED,
@@ -35,8 +26,7 @@ class AddMeasurementCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $apikey = $input->getArgument('apikey');
-        $apisecret = $input->getArgument('apisecret');
+        parent::execute($input, $output);
         $growchartid = $input->getArgument('growchartid');
 
         $dialog = $this->getHelperSet()->get('dialog');
@@ -67,10 +57,12 @@ class AddMeasurementCommand extends Command
         $measurement->setDate($date);
         $measurement->setValue($value);
         $measurement->setGrowchartid($growchartid);
-        
-        $client = new Client($apikey, $apisecret);
-        $res = $client->addMeasurement($measurement);
-        // echo $client->getQueryUrl();
+        try {
+            $res = $this->client->addMeasurement($measurement);
+        } catch (Exception $ex) {
+            $output->writeln('<error>' . $ex->getMessage() . '</error>');
+            exit;
+        }
         $output->writeln($res);
     }
 }

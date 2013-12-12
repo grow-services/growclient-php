@@ -1,12 +1,11 @@
 <?php
 
-namespace GrowChart\RestClient\Command;
+namespace GrowChart\Command;
 
-use Symfony\Component\Console\Command\Command;
+use GrowChart\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputArgument;
-use GrowChart\RestClient\Client;
 use GrowChart\Common\Birth;
 use Exception;
 
@@ -19,18 +18,9 @@ class RegisterBirthCommand extends Command
 {
     protected function configure()
     {
-        $this->setName('rest:registerbirth')
+        parent::configure();
+        $this->setName('grow:registerbirth')
             ->setDescription('Register baby birth')
-            ->addArgument(
-                'apikey',
-                InputArgument::REQUIRED,
-                'API Key'
-            )
-            ->addArgument(
-                'apisecret',
-                InputArgument::REQUIRED,
-                'API Secret'
-            )
             ->addArgument(
                 'growchartid',
                 InputArgument::REQUIRED,
@@ -40,8 +30,7 @@ class RegisterBirthCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $apikey = $input->getArgument('apikey');
-        $apisecret = $input->getArgument('apisecret');
+        parent::execute($input, $output);
         $growchartid = $input->getArgument('growchartid');
 
         $dialog = $this->getHelperSet()->get('dialog');
@@ -79,8 +68,6 @@ class RegisterBirthCommand extends Command
             'N'
         );
 
-        $client = new Client($apikey, $apisecret);
-        
         $birth = new Birth();
         $birth->setAntenataliugrdetection($antenataliugrdetection);
         $birth->setBabydob($babydob);
@@ -91,7 +78,7 @@ class RegisterBirthCommand extends Command
         $birth->setGrowchartid($growchartid);
 
         try {
-            $res = $client->registerBirth($birth);
+            $res = $this->client->registerBirth($birth);
         } catch (Exception $ex) {
             $output->writeln('<error>' . $ex->getMessage() . '</error>');
         }
