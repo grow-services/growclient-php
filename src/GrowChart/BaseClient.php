@@ -12,8 +12,36 @@ abstract class BaseClient implements ClientInterface
     protected $isError = false;
     protected $errorCode;
     protected $errorMessage;
+    protected $baseurl = "https://www.grow-services.net/api/grow";
+    protected $queryurl = '';
+    protected $debug = false;
+
 
     /**
+     * Set api server url.
+     * @param type $baseurl
+     */
+    public function setBaseUrl($baseurl)
+    {
+        $this->baseurl = rtrim($baseurl, '/');
+    }
+    
+    protected function getBaseUrl()
+    {
+        return rtrim($this->baseurl);
+    }
+
+    protected function setUserKey($userkey)
+    {
+        $this->userkey = $userkey;
+    }
+    
+    protected function setUserSecret($secret)
+    {
+        $this->usersecret = $secret;
+    }
+
+        /**
      * Generate the token string.
      * @param string $salt
      * @return string
@@ -21,6 +49,84 @@ abstract class BaseClient implements ClientInterface
     public function generateToken($salt = '')
     {
         return sha1($this->userkey . $this->usersecret . $salt);
+    }
+
+    /**
+     * Build query url.
+     * @param string $path
+     * @param string $token
+     * @param mixed $data
+     * @return string $url
+     */
+    protected function buildQuery($path, $token, $data)
+    {
+        $url = rtrim($this->baseurl, '/') . $path . '?licensekey=' . $this->userkey;
+        $url .= '&token=' . $token;
+        $url .= '&' . http_build_query($data);
+        return $this->queryurl = $url;
+    }
+
+    /**
+     * http request.
+     * @param string $url
+     * @return string
+     */
+    protected function httpRequest($url)
+    {
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_URL, $url);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($curl, CURLOPT_HEADER, 0);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+        $response = curl_exec($curl);
+        if (($error = curl_error($curl))) {
+            $this->isError = true;
+            $this->errorMessage = $error;
+            throw new RuntimeException($error);
+        }
+        curl_close($curl);
+        return $response;
+    }
+
+    /**
+     * Get the query url.
+     * get query url.
+     * @return string
+     */
+    public function getQueryUrl()
+    {
+        return $this->queryurl;
+    }
+
+    /**
+     * Verify the request response.
+     * @param string $response
+     * @return \SimpleXMLElement
+     */
+    public function verifyResponse($response)
+    {
+        if (($res = simplexml_load_string($response))) {
+            if (isset($res->code)) {
+                $this->errorCode = (string) $res->code;
+                $this->errorMessage = (string) $res->message;
+                $this->isError = true;
+            }
+            return $res;
+        }
+        $this->isError = true;
+    }
+    
+    /**
+     * Start request
+     * @param type $url
+     * @return type
+     */
+    protected function doRequest($url)
+    {
+        echo $url;
+        $response = $this->httpRequest($url);
+        return $this->verifyResponse($response);
     }
 
     public function isError()
@@ -36,5 +142,10 @@ abstract class BaseClient implements ClientInterface
     public function getErrorMessage()
     {
         return $this->errorMessage;
+    }
+    
+    public function debug()
+    {
+        $this->debug = true;
     }
 }

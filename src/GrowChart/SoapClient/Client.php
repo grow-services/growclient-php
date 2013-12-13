@@ -16,15 +16,12 @@ use GrowChart\Common\Birth;
  */
 class Client extends BaseClient
 {
-    const HEADER_NS = 'https://www.grow-services.net/api/grow/soap/';
-    private $wsdl = 'https://www.grow-services.net/api/grow/soap/?wsdl';
-    private $client = null;
-
+    private $soapClient = null;
 
     public function call($function_name, $arguments)
     {
         try {
-            $response = $this->client->__soapCall($function_name, $arguments);
+            $response = $this->soapClient->__soapCall($function_name, $arguments);
             return $response;
         } catch (\Exception $ex) {
             $this->isError = true;
@@ -40,15 +37,20 @@ class Client extends BaseClient
         $this->userkey = $userkey;
         $this->usersecret = $usersecret;
         
-        $this->client = new \SoapClient($this->wsdl, array(
+        $baseUrl = $this->getBaseUrl();
+        $this->wsdl = $baseUrl . '/soap/?wsdl';
+        
+        $this->soapClient = new \SoapClient($this->wsdl, array(
             'cache_wsdl'   => 0,
-            'soap_version' => SOAP_1_2
+            'soap_version' => SOAP_1_2,
+            'trace'        => $this->debug
         ));
+        
         $authHeader = new \stdClass();
         $authHeader->licensekey = $this->userkey;
         $authHeader->token = $this->generateToken();
-        $header = new \SoapHeader(self::HEADER_NS, 'authenticate', $authHeader);
-        $this->client->__setSoapHeaders(array($header));
+        $header = new \SoapHeader($baseUrl, 'authenticate', $authHeader);
+        $this->soapClient->__setSoapHeaders(array($header));
     }
     
     public function addMeasurement(Measurement $measurement)
