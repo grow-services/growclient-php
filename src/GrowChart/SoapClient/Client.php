@@ -20,6 +20,22 @@ class Client extends BaseClient
 
     public function call($function_name, $arguments)
     {
+        if (!$this->soapClient) {
+            $baseUrl = $this->getBaseUrl();
+            $this->wsdl = $baseUrl . '/soap/?wsdl';
+            $this->soapClient = new \SoapClient($this->wsdl, array(
+                'cache_wsdl'   => 0,
+                'soap_version' => SOAP_1_2,
+                'trace'        => $this->debug
+            ));
+
+            $authHeader = new \stdClass();
+            $authHeader->licensekey = $this->userkey;
+            $authHeader->token = $this->generateToken();
+            $header = new \SoapHeader($baseUrl, 'authenticate', $authHeader);
+            $this->soapClient->__setSoapHeaders(array($header));
+        }
+
         try {
             $response = $this->soapClient->__soapCall($function_name, $arguments);
             return $response;
@@ -27,30 +43,15 @@ class Client extends BaseClient
             $this->isError = true;
             $this->errorCode = $ex->getCode();
             $this->errorMessage = $ex->getMessage();
+            $this->soapClient->__getLastRequest();
             throw new \RuntimeException($this->errorMessage, $this->errorCode);
         }
     }
-
 
     public function __construct($userkey, $usersecret)
     {
         $this->userkey = $userkey;
         $this->usersecret = $usersecret;
-        
-        $baseUrl = $this->getBaseUrl();
-        $this->wsdl = $baseUrl . '/soap/?wsdl';
-        
-        $this->soapClient = new \SoapClient($this->wsdl, array(
-            'cache_wsdl'   => 0,
-            'soap_version' => SOAP_1_2,
-            'trace'        => $this->debug
-        ));
-        
-        $authHeader = new \stdClass();
-        $authHeader->licensekey = $this->userkey;
-        $authHeader->token = $this->generateToken();
-        $header = new \SoapHeader($baseUrl, 'authenticate', $authHeader);
-        $this->soapClient->__setSoapHeaders(array($header));
     }
     
     public function addMeasurement(Measurement $measurement)
