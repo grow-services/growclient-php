@@ -124,7 +124,6 @@ abstract class BaseClient implements ClientInterface
      */
     protected function doRequest($url)
     {
-        echo $url;
         $response = $this->httpRequest($url);
         return $this->verifyResponse($response);
     }
