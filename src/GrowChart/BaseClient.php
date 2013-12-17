@@ -2,6 +2,8 @@
 
 namespace GrowChart;
 
+use RuntimeException;
+
 /**
  * @author Cong Peijun <p.cong@linkorb.com>
  */
