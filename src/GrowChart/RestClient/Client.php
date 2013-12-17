@@ -110,6 +110,27 @@ class Client extends BaseClient
     }
 
     /**
+     * Clear grow chart data.
+     * @param string $growchartid
+     * @return \SimpleXMLElement
+     * @throws RuntimeException
+     */
+    public function clearData($growchartid)
+    {
+        $url = $this->buildQuery(
+            '/rest/cleardata/',
+            $this->generateToken(),
+            array('growchartid' => $growchartid)
+        );
+        $res = $this->doRequest($url);
+
+        if ($this->isError) {
+            throw new RuntimeException($this->errorMessage, $this->errorCode);
+        }
+        return $res;
+    }
+                                                                                                
+    /**
      * Get GROW pdf.
      * @param \GrowChart\Common\ChartPdf $chartpdf
      * @param string $filename If the file name is set, you can get a pdf file with given name.
