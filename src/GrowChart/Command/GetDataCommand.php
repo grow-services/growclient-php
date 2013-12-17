@@ -37,7 +37,8 @@ class GetDataCommand extends Command
             $data = $this->client->getData($growchartid);
         } catch (Exception $ex) {
             $output->writeln('<error>' . $ex->getMessage() . '</error>');
+            exit;
         }
-        print_r(json_decode(json_encode($data)));
+        print_r(json_decode(json_encode($data), true));
     }
 }
