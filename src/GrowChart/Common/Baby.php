@@ -13,6 +13,8 @@ class Baby
     public $babygender;
     public $antenataliugrdetection;
     public $babyname;
+    public $babynr;
+
 
     public function getSoapParams()
     {
@@ -24,7 +26,8 @@ class Baby
             'birthweight'            => $this->birthheight,
             'babygender'             => $this->babygender,
             'antenataliugrdetection' => $this->antenataliugrdetection,
-            'babyname'               => $this->babyname
+            'babyname'               => $this->babyname,
+            'babynr'                 => $this->babynr
         );
     }
 
@@ -106,5 +109,15 @@ class Baby
     public function setBabyName($babyname)
     {
         $this->babyname = $babyname;
+    }
+    
+    public function getBabynr()
+    {
+        return $this->babynr;
+    }
+
+    public function setBabynr($babynr)
+    {
+        $this->babynr = $babynr;
     }
 }
