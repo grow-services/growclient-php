@@ -2,11 +2,12 @@
 
 namespace GrowChart;
 
-use GrowChart\Common\Pregnancy;
-use GrowChart\Common\Measurement;
+use GrowChart\Common\Baby;
+use GrowChart\Common\Birth;
 use GrowChart\Common\Chart;
 use GrowChart\Common\ChartPdf;
-use GrowChart\Common\Birth;
+use GrowChart\Common\Measurement;
+use GrowChart\Common\Pregnancy;
 
 /**
  * The grow client intreface.
@@ -22,8 +23,12 @@ interface ClientInterface
     public function getChartImage(Chart $chart, $filename = null);
 
     public function registerBirth(Birth $birth);
+    
+    public function registerBaby(Baby $baby);
 
-    public function getData($growchartid);
+    public function getData($growchartid, $requestdate = null, $weight = null);
 
     public function getPDF(ChartPdf $chartpdf, $filename = null);
+    
+    public function clearData($growchartid);
 }

@@ -3,12 +3,14 @@
 namespace GrowChart\RestClient;
 
 use GrowChart\BaseClient;
-use GrowChart\Common\Pregnancy;
-use GrowChart\Common\Measurement;
-use GrowChart\Common\Chart;
+use GrowChart\Common\Baby;
 use GrowChart\Common\Birth;
+use GrowChart\Common\Chart;
 use GrowChart\Common\ChartPdf;
+use GrowChart\Common\Measurement;
+use GrowChart\Common\Pregnancy;
 use RuntimeException;
+use SimpleXMLElement;
 
 class Client extends BaseClient
 {
@@ -20,7 +22,7 @@ class Client extends BaseClient
 
     /**
      * Register pregnancy.
-     * @param \GrowChart\Common\Pregnancy $pregnancy
+     * @param Pregnancy $pregnancy
      * @return string The grow chart id.
      */
     public function registerPregnancy(Pregnancy $pregnancy)
@@ -41,8 +43,8 @@ class Client extends BaseClient
 
     /**
      * Add measurement.
-     * @param \GrowChart\Common\Measurement $measurement
-     * @return \SimpleXMLElement
+     * @param Measurement $measurement
+     * @return SimpleXMLElement
      * @throws RuntimeException
      */
     public function addMeasurement(Measurement $measurement)
@@ -61,7 +63,7 @@ class Client extends BaseClient
 
     /**
      * Get grow chart images.
-     * @param \GrowChart\Common\Chart $chart
+     * @param Chart $chart
      * @param string $filename The image file name. if you want to get the image to local.
      * @return string The grow chart image url.
      */
@@ -90,15 +92,21 @@ class Client extends BaseClient
     /**
      * Get the grow chart data.
      * @param string $growchartid
-     * @return \SimpleXMLElement
+     * @param string $requestdate
+     * @param double $weight
+     * @return SimpleXMLElement
      * @throws RuntimeException
      */
-    public function getData($growchartid)
+    public function getData($growchartid, $requestdate = null, $weight = null)
     {
         $url = $this->buildQuery(
             '/rest/getdata/',
             $this->generateToken(),
-            array('growchartid' => $growchartid)
+            array(
+                'growchartid' => $growchartid,
+                'requestdate' => $requestdate,
+                'weight'      => $weight
+            )
         );
         
         $res = $this->doRequest($url);
@@ -112,7 +120,7 @@ class Client extends BaseClient
     /**
      * Clear grow chart data.
      * @param string $growchartid
-     * @return \SimpleXMLElement
+     * @return SimpleXMLElement
      * @throws RuntimeException
      */
     public function clearData($growchartid)
@@ -132,9 +140,9 @@ class Client extends BaseClient
                                                                                                 
     /**
      * Get GROW pdf.
-     * @param \GrowChart\Common\ChartPdf $chartpdf
+     * @param ChartPdf $chartpdf
      * @param string $filename If the file name is set, you can get a pdf file with given name.
-     * @return \SimpleXMLElement
+     * @return SimpleXMLElement
      * @throws RuntimeException
      */
     public function getPDF(ChartPdf $chartpdf, $filename = null)
@@ -161,8 +169,8 @@ class Client extends BaseClient
 
     /**
      * Register birth.
-     * @param \GrowChart\Common\Birth $birth
-     * @return \SimpleXMLElement
+     * @param Birth $birth
+     * @return SimpleXMLElement
      * @throws RuntimeException
      */
     public function registerBirth(Birth $birth)
@@ -171,6 +179,28 @@ class Client extends BaseClient
             '/rest/registerbirth/',
             $this->generateToken(),
             $birth
+        );
+        
+        $res = $this->doRequest($url);
+        
+        if ($this->isError) {
+            throw new RuntimeException($this->errorMessage, $this->errorCode);
+        }
+        return $res;
+    }
+
+    /**
+     * Register baby.
+     * @param Baby $baby
+     * @return type
+     * @throws RuntimeException
+     */
+    public function registerBaby(Baby $baby)
+    {
+        $url = $this->buildQuery(
+            '/rest/registerbaby',
+            $this->generateToken(),
+            $baby
         );
         
         $res = $this->doRequest($url);

@@ -12,6 +12,10 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class Command extends SymfonyCommand
 {
+    /**
+     * Grow client
+     * @var ClientInterface
+     */
     protected $client;
     
     private $clientTypes = array(

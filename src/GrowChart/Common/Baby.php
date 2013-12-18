@@ -2,25 +2,32 @@
 
 namespace GrowChart\Common;
 
-class Birth
+class Baby
 {
+
     public $growchartid;
     public $babydob;
+    public $birthgestation;
     public $birthweight;
+    public $birthheight;
     public $babygender;
     public $antenataliugrdetection;
+    public $babyname;
 
     public function getSoapParams()
     {
         return array(
             'growchartid'            => $this->growchartid,
             'babydob'                => $this->babydob,
+            'birthgestation'         => $this->birthgestation,
             'birthweight'            => $this->birthweight,
+            'birthweight'            => $this->birthheight,
             'babygender'             => $this->babygender,
             'antenataliugrdetection' => $this->antenataliugrdetection,
+            'babyname'               => $this->babyname
         );
     }
-    
+
     public function getGrowchartid()
     {
         return $this->growchartid;
@@ -29,6 +36,11 @@ class Birth
     public function getBabydob()
     {
         return $this->babydob;
+    }
+
+    public function getBirthgestation()
+    {
+        return $this->birthgestation;
     }
 
     public function getBirthweight()
@@ -56,6 +68,11 @@ class Birth
         $this->babydob = $babydob;
     }
 
+    public function setBirthgestation($birthgestation)
+    {
+        $this->birthgestation = $birthgestation;
+    }
+
     public function setBirthweight($birthweight)
     {
         $this->birthweight = $birthweight;
@@ -69,5 +86,25 @@ class Birth
     public function setAntenataliugrdetection($antenataliugrdetection)
     {
         $this->antenataliugrdetection = $antenataliugrdetection;
+    }
+    
+    public function getBirthheight()
+    {
+        return $this->birthheight;
+    }
+
+    public function setBirthheight($birthheight)
+    {
+        $this->birthheight = $birthheight;
+    }
+    
+    public function getBabyName()
+    {
+        return $this->babyname;
+    }
+
+    public function setBabyName($babyname)
+    {
+        $this->babyname = $babyname;
     }
 }

@@ -4,17 +4,17 @@ namespace GrowChart\Command;
 
 use Exception;
 use GrowChart\Command;
-use GrowChart\Common\Birth;
+use GrowChart\Common\Baby;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * RegisterBirth demo code.
+ * Register baby demo code.
  *
  * @author Cong Peijun <p.cong@linkorb.com>
  */
-class RegisterBirthCommand extends Command
+class RegisterBabyCommand extends Command
 {
     protected function configure()
     {
@@ -51,22 +51,34 @@ class RegisterBirthCommand extends Command
             '<info>Please entry baby weight(g):</info>'
         );
         
+        $birthheight = $dialog->ask(
+            $output,
+            '<info>Please entry baby heigth(cm):</info>'
+        );
+
+        $birthgestation = $dialog->ask(
+            $output,
+            '<info>Please entry birth gestation:</info>'
+        );
+        
         $antenataliugrdetection = $dialog->select(
             $output,
             '<info>Whether the baby is antenatal iugr detection?(N):</info>',
             array('Y' => 'Yes', 'N' => 'No'),
             'N'
         );
-
-        $birth = new Birth();
+       
+        $birth = new Baby();
         $birth->setAntenataliugrdetection($antenataliugrdetection);
         $birth->setBabydob($babydob);
         $birth->setBabygender($babygender);
+        $birth->setBirthgestation($birthgestation);
         $birth->setBirthweight($birthweight);
+        $birth->setBirthheight($birthheight);
         $birth->setGrowchartid($growchartid);
 
         try {
-            $res = $this->client->registerBirth($birth);
+            $res = $this->client->registerBaby($birth);
         } catch (Exception $ex) {
             $output->writeln('<error>' . $ex->getMessage() . '</error>');
         }
