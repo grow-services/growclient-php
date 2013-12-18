@@ -198,7 +198,7 @@ class Client extends BaseClient
     public function registerBaby(Baby $baby)
     {
         $url = $this->buildQuery(
-            '/rest/registerbaby',
+            '/rest/registerbaby/',
             $this->generateToken(),
             $baby
         );
