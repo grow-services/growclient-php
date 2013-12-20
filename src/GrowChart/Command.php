@@ -43,7 +43,7 @@ class Command extends SymfonyCommand
         $apikey = $input->getArgument('apikey');
         try {
             $this->client = ClientFactory::getInstance()->getClient($clientType, $apikey, $apisecret);
-            $this->client->setBaseUrl('http://linkorbapi.l.cn/api/grow');
+            // $this->client->setBaseUrl('http://linkorbapi.l.cn/api/grow');
         } catch (\Exception $ex) {
             $output->writeln('<error>' . $ex->getMessage() . '</error>');
             exit;
