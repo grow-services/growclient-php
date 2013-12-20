@@ -2,7 +2,7 @@
 
 namespace GrowChart\RestClient;
 
-use GrowChart\BaseClient;
+use GrowChart\AbstractClient;
 use GrowChart\Common\Baby;
 use GrowChart\Common\Birth;
 use GrowChart\Common\Chart;
@@ -12,14 +12,8 @@ use GrowChart\Common\Pregnancy;
 use RuntimeException;
 use SimpleXMLElement;
 
-class Client extends BaseClient
+class Client extends AbstractClient
 {
-    public function __construct($userkey, $usersecret)
-    {
-        $this->userkey = $userkey;
-        $this->usersecret = $usersecret;
-    }
-
     /**
      * Register pregnancy.
      * @param Pregnancy $pregnancy
@@ -27,10 +21,8 @@ class Client extends BaseClient
      */
     public function registerPregnancy(Pregnancy $pregnancy)
     {
-        $token = $this->generateToken();
         $url = $this->buildQuery(
             '/rest/registerpregnancy/',
-            $token,
             $pregnancy
         );
         $res = $this->doRequest($url);
@@ -51,7 +43,6 @@ class Client extends BaseClient
     {
         $url = $this->buildQuery(
             '/rest/addmeasurement/',
-            $this->generateToken(),
             $measurement
         );
         $res = $this->doRequest($url);
@@ -71,7 +62,6 @@ class Client extends BaseClient
     {
         $url = $this->buildQuery(
             '/rest/getchartimage/',
-            $this->generateToken(),
             $chart
         );
         
@@ -101,7 +91,6 @@ class Client extends BaseClient
     {
         $url = $this->buildQuery(
             '/rest/getdata/',
-            $this->generateToken(),
             array(
                 'growchartid' => $growchartid,
                 'requestdate' => $requestdate,
@@ -127,7 +116,6 @@ class Client extends BaseClient
     {
         $url = $this->buildQuery(
             '/rest/cleardata/',
-            $this->generateToken(),
             array('growchartid' => $growchartid)
         );
         $res = $this->doRequest($url);
@@ -149,7 +137,6 @@ class Client extends BaseClient
     {
         $url = $this->buildQuery(
             '/rest/getpdf/',
-            $this->generateToken(),
             $chartpdf
         );
         
@@ -177,7 +164,6 @@ class Client extends BaseClient
     {
         $url = $this->buildQuery(
             '/rest/registerbirth/',
-            $this->generateToken(),
             $birth
         );
         
@@ -199,7 +185,6 @@ class Client extends BaseClient
     {
         $url = $this->buildQuery(
             '/rest/registerbaby/',
-            $this->generateToken(),
             $baby
         );
         

@@ -3,7 +3,7 @@
 namespace GrowChart\SoapClient;
 
 use Exception;
-use GrowChart\BaseClient;
+use GrowChart\AbstractClient;
 use GrowChart\Common\Baby;
 use GrowChart\Common\Birth;
 use GrowChart\Common\Chart;
@@ -20,7 +20,7 @@ use stdClass;
  *
  * @author Cong Peijun <p.cong@linkorb.com>
  */
-class Client extends BaseClient
+class Client extends AbstractClient
 {
     private $soapClient = null;
 
@@ -54,12 +54,6 @@ class Client extends BaseClient
         }
     }
 
-    public function __construct($userkey, $usersecret)
-    {
-        $this->userkey = $userkey;
-        $this->usersecret = $usersecret;
-    }
-    
     public function addMeasurement(Measurement $measurement)
     {
         $this->call('addMeasurement', $measurement->getSoapParams());

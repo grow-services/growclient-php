@@ -2,7 +2,7 @@
 
 namespace GrowChart\XmlClient;
 
-use GrowChart\BaseClient;
+use GrowChart\AbstractClient;
 use GrowChart\Common\Baby;
 use GrowChart\Common\Birth;
 use GrowChart\Common\Chart;
@@ -15,7 +15,7 @@ use GrowChart\Common\Pregnancy;
  *
  * @author Cong Peijun <p.cong@linkorb.com>
  */
-class Client extends BaseClient
+class Client extends AbstractClient
 {
     public function addMeasurement(Measurement $measurement)
     {

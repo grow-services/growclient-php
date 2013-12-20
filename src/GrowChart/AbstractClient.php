@@ -7,7 +7,7 @@ use RuntimeException;
 /**
  * @author Cong Peijun <p.cong@linkorb.com>
  */
-abstract class BaseClient implements ClientInterface
+abstract class AbstractClient implements ClientInterface
 {
     protected $userkey;
     protected $usersecret;
@@ -19,6 +19,12 @@ abstract class BaseClient implements ClientInterface
     protected $debug = false;
 
 
+    public function __construct($userkey, $usersecret)
+    {
+        $this->userkey = $userkey;
+        $this->usersecret = $usersecret;
+    }
+    
     /**
      * Set api server url.
      * @param type $baseurl
@@ -60,10 +66,10 @@ abstract class BaseClient implements ClientInterface
      * @param mixed $data
      * @return string $url
      */
-    protected function buildQuery($path, $token, $data)
+    protected function buildQuery($path, $data)
     {
         $url = rtrim($this->baseurl, '/') . $path . '?licensekey=' . $this->userkey;
-        $url .= '&token=' . $token;
+        $url .= '&token=' . $this->generateToken();
         $url .= '&' . http_build_query($data);
         return $this->queryurl = $url;
     }
@@ -73,7 +79,7 @@ abstract class BaseClient implements ClientInterface
      * @param string $url
      * @return string
      */
-    protected function httpRequest($url)
+    protected function httpRequest($url, $payload = null)
     {
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $url);
@@ -81,6 +87,12 @@ abstract class BaseClient implements ClientInterface
         curl_setopt($curl, CURLOPT_HEADER, 0);
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+        
+        if (!is_null($payload)) {
+            curl_setopt($curl, CURLOPT_POST, 1);
+            curl_setopt($curl, CURLOPT_POSTFIELDS, $payload);
+        }
+        
         $response = curl_exec($curl);
         if (($error = curl_error($curl))) {
             $this->isError = true;

@@ -14,16 +14,10 @@ class Command extends SymfonyCommand
 {
     /**
      * Grow client
-     * @var ClientInterface
+     * @var AbstractClient
      */
     protected $client;
     
-    private $clientTypes = array(
-        'rest',
-        'xml',
-        'soap'
-    );
-
     protected function configure()
     {
         $this->addArgument(
@@ -48,27 +42,12 @@ class Command extends SymfonyCommand
         $apisecret = $input->getArgument('apisecret');
         $apikey = $input->getArgument('apikey');
         try {
-            $this->client = $this->getClientInstance($clientType, $apikey, $apisecret);
+            $this->client = ClientFactory::getInstance()->getClient($clientType, $apikey, $apisecret);
+            $this->client->setBaseUrl('http://linkorbapi.l.cn/api/grow');
         } catch (\Exception $ex) {
             $output->writeln('<error>' . $ex->getMessage() . '</error>');
             exit;
         }
         
-    }
-    
-    /**
-     * Get grow client.
-     * @param string $clientType
-     * @param string $apikey
-     * @param string $apisecret
-     * @return The grow client instance.
-     */
-    protected function getClientInstance($clientType, $apikey, $apisecret)
-    {
-        if (!in_array(strtolower($clientType), $this->clientTypes)) {
-            throw new \RuntimeException('The client type "'. $clientType .'" is not supported.');
-        }
-        $className = 'GrowChart\\' . ucfirst(strtolower($clientType)) . 'Client\\Client';
-        return new $className($apikey, $apisecret);
     }
 }
