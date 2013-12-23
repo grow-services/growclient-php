@@ -2,8 +2,11 @@
 
 namespace GrowChart\Common;
 
-class Pregnancy
+use DOMDocument;
+
+class Pregnancy extends AbstractCommon
 {
+
     public $growchartid;
     public $maternalheight;
     public $maternalweight;
@@ -12,6 +15,9 @@ class Pregnancy
     public $parity = 0;
     public $ethnicity;
     public $requestdate = null;
+    
+    protected $rootName = 'pregnancy';
+
 
     public function getGrowchartid()
     {
@@ -92,8 +98,8 @@ class Pregnancy
     {
         $this->requestdate = $requestdate;
     }
-    
-    public function getSoapParams()
+
+    protected function toArray()
     {
         $params = array();
         $params['maternalheight'] = $this->getMaternalheight();

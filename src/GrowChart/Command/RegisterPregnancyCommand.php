@@ -30,6 +30,7 @@ class RegisterPregnancyCommand extends Command
     {
         parent::execute($input, $output);
         
+        $growchartid = $input->getArgument('growchartid');
         $dialog = $this->getHelperSet()->get('dialog');
         
         $maternalheight = $dialog->askAndValidate(
@@ -101,6 +102,7 @@ class RegisterPregnancyCommand extends Command
         $preg->setMaternalheight($maternalheight);
         $preg->setMaternalweight($maternalweight);
         $preg->setGrowchartversion($growversion);
+        $preg->setGrowchartid($growchartid);
         
         $client = $this->client;
         try {

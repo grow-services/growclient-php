@@ -19,7 +19,7 @@ class RegisterBabyCommand extends Command
     protected function configure()
     {
         parent::configure();
-        $this->setName('grow:registerbirth')
+        $this->setName('grow:registerbaby')
             ->setDescription('Register baby birth')
             ->addArgument(
                 'growchartid',
@@ -51,30 +51,16 @@ class RegisterBabyCommand extends Command
             '<info>Please entry baby weight(g):</info>'
         );
         
-        $birthheight = $dialog->ask(
-            $output,
-            '<info>Please entry baby heigth(cm):</info>'
-        );
-
         $birthgestation = $dialog->ask(
             $output,
             '<info>Please entry birth gestation:</info>'
         );
         
-        $antenataliugrdetection = $dialog->select(
-            $output,
-            '<info>Whether the baby is antenatal iugr detection?(N):</info>',
-            array('Y' => 'Yes', 'N' => 'No'),
-            'N'
-        );
-       
         $birth = new Baby();
-        $birth->setAntenataliugrdetection($antenataliugrdetection);
         $birth->setBabydob($babydob);
         $birth->setBabygender($babygender);
         $birth->setBirthgestation($birthgestation);
         $birth->setBirthweight($birthweight);
-        $birth->setBirthheight($birthheight);
         $birth->setGrowchartid($growchartid);
 
         try {

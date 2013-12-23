@@ -4,7 +4,7 @@ namespace GrowChart\Common;
 
 use InvalidArgumentException;
 
-class Chart
+class Chart extends AbstractCommon
 {
     public $firstname;
     public $lastname;
@@ -125,11 +125,11 @@ class Chart
         $this->reference = $reference;
     }
 
-    public function getSoapParams()
+    public function toArray()
     {
         return array(
             'growchartid' => $this->getGrowchartid(),
-            'reference' => $this->getReference(),
+            'reference'   => $this->getReference(),
             'height'      => $this->getHeight(),
             'width'       => $this->getWidth(),
             'language'    => $this->getLanguage(),

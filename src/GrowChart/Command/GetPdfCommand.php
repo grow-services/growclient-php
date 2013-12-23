@@ -95,7 +95,7 @@ class GetPdfCommand extends Command
         $pdf->setLanguage($language);
         $pdf->setLastname($lastname);
         $pdf->setMaternaldob($maternaldob);
-        $pdf->setMaternalreference($maternalreference);
+        $pdf->setReference($maternalreference);
 
         try {
             $url = $this->client->getPDF($pdf);

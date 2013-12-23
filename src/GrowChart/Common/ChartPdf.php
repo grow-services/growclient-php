@@ -2,27 +2,27 @@
 
 namespace GrowChart\Common;
 
-class ChartPdf
+class ChartPdf extends AbstractCommon
 {
     public $growchartid;
     public $firstname;
     public $lastname;
     public $maternaldob;
     public $language = 'en_Uk';
-    public $maternalreference;
+    public $reference;
     public $babyname;
     public $babygender;
     public $babygestation;
     public $babybirthweight;
     
-    public function getSoapParams()
+    public function toArray()
     {
         return array(
             'growchartid'       => $this->growchartid,
             'firstname'         => $this->firstname,
             'lastname'          => $this->lastname,
             'maternaldob'       => $this->maternaldob,
-            'maternalreference' => $this->maternalreference,
+            'reference'         => $this->reference,
             'babyname'          => $this->babyname,
             'babygender'        => $this->babygender,
             'babygestation'     => $this->babygestation,
@@ -55,9 +55,9 @@ class ChartPdf
         return $this->language;
     }
 
-    public function getMaternalreference()
+    public function getReference()
     {
-        return $this->maternalreference;
+        return $this->reference;
     }
 
     public function getBabyname()
@@ -105,9 +105,9 @@ class ChartPdf
         $this->language = $language;
     }
 
-    public function setMaternalreference($maternalreference)
+    public function setReference($reference)
     {
-        $this->maternalreference = $maternalreference;
+        $this->reference = $reference;
     }
 
     public function setBabyname($babyname)

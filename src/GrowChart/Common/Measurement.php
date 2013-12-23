@@ -2,15 +2,22 @@
 
 namespace GrowChart\Common;
 
+use DOMDocument;
 use InvalidArgumentException;
 
-class Measurement
+class Measurement extends AbstractCommon
 {
+
     public $growchartid;
     public $value;
     public $type;
     public $date;
     private static $measurementTypes = array('efw', 'fundalheight', 'birthweight');
+
+    /**
+     * @var Measurement[]
+     */
+    public static $measurements = array();
 
     public function getGrowchartid()
     {
@@ -54,13 +61,13 @@ class Measurement
     {
         $this->date = $date;
     }
-    
+
     public static function getMeasurementTypes()
     {
         return self::$measurementTypes;
     }
-    
-    public function getSoapParams()
+
+    protected function toArray()
     {
         return array(
             'growchartid' => $this->getGrowchartid(),
@@ -68,5 +75,37 @@ class Measurement
             'type'        => $this->getType(),
             'value'       => $this->getValue()
         );
+    }
+
+    public static function addMesurements($measurement)
+    {
+        self::$measurements[] = $measurement;
+    }
+
+
+    public function getXmlPayload()
+    {
+        if (!self::$measurements) {
+            self::$measurements = array($this);
+        }
+        
+        $xml = new DOMDocument();
+        $xml->encoding = 'utf-8';
+
+        $root = $xml->createElement('measurements');
+        $root->setAttribute('growchartid', $this->growchartid);
+        foreach (self::$measurements as $measurement) {
+            $measurementNode = $xml->createElement('measurement');
+
+            foreach ($measurement->toArray() as $k => $v) {
+                $mNode = $xml->createElement($k, $v);
+                $measurementNode->appendChild($mNode);
+            }
+
+            $root->appendChild($measurementNode);
+        }
+        $xml->appendChild($root);
+        $xml->formatOutput = true;
+        return $xml->saveXML();
     }
 }

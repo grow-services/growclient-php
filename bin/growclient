@@ -33,6 +33,8 @@ $application->add(new Command\RegisterPregnancyCommand());
 $application->add(new Command\AddMeasurementCommand());
 $application->add(new Command\GetImageCommand());
 $application->add(new Command\RegisterBirthCommand());
+$application->add(new Command\RegisterBabyCommand());
 $application->add(new Command\GetDataCommand());
 $application->add(new Command\GetPdfCommand());
+$application->add(new Command\ClearDataCommand());
 $application->run();

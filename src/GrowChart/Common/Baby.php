@@ -2,7 +2,7 @@
 
 namespace GrowChart\Common;
 
-class Baby
+class Baby extends AbstractCommon
 {
 
     public $growchartid;
@@ -11,23 +11,20 @@ class Baby
     public $birthweight;
     public $birthheight;
     public $babygender;
-    public $antenataliugrdetection;
     public $babyname;
     public $babynr;
 
 
-    public function getSoapParams()
+    public function toArray()
     {
         return array(
             'growchartid'            => $this->growchartid,
+            'babynr'                 => $this->babynr,
             'babydob'                => $this->babydob,
             'birthgestation'         => $this->birthgestation,
             'birthweight'            => $this->birthweight,
-            'birthweight'            => $this->birthheight,
             'babygender'             => $this->babygender,
-            'antenataliugrdetection' => $this->antenataliugrdetection,
-            'babyname'               => $this->babyname,
-            'babynr'                 => $this->babynr
+            'babyname'               => $this->babyname
         );
     }
 
@@ -56,11 +53,6 @@ class Baby
         return $this->babygender;
     }
 
-    public function getAntenataliugrdetection()
-    {
-        return $this->antenataliugrdetection;
-    }
-
     public function setGrowchartid($growchartid)
     {
         $this->growchartid = $growchartid;
@@ -86,11 +78,6 @@ class Baby
         $this->babygender = $babygender;
     }
 
-    public function setAntenataliugrdetection($antenataliugrdetection)
-    {
-        $this->antenataliugrdetection = $antenataliugrdetection;
-    }
-    
     public function getBirthheight()
     {
         return $this->birthheight;

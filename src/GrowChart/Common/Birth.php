@@ -2,7 +2,7 @@
 
 namespace GrowChart\Common;
 
-class Birth
+class Birth extends AbstractCommon
 {
     public $growchartid;
     public $babydob;
@@ -10,7 +10,7 @@ class Birth
     public $babygender;
     public $antenataliugrdetection;
 
-    public function getSoapParams()
+    public function toArray()
     {
         return array(
             'growchartid'            => $this->growchartid,

@@ -66,11 +66,14 @@ abstract class AbstractClient implements ClientInterface
      * @param mixed $data
      * @return string $url
      */
-    protected function buildQuery($path, $data)
+    protected function buildQuery($path, $data = null)
     {
         $url = rtrim($this->baseurl, '/') . $path . '?licensekey=' . $this->userkey;
         $url .= '&token=' . $this->generateToken();
-        $url .= '&' . http_build_query($data);
+        
+        if ($data) {
+            $url .= '&' . http_build_query($data);
+        }
         return $this->queryurl = $url;
     }
 
@@ -134,11 +137,12 @@ abstract class AbstractClient implements ClientInterface
     /**
      * Start request
      * @param type $url
+     * @param string $payload
      * @return type
      */
-    protected function doRequest($url)
+    protected function doRequest($url, $payload = null)
     {
-        $response = $this->httpRequest($url);
+        $response = $this->httpRequest($url, $payload);
         return $this->verifyResponse($response);
     }
 

@@ -2,11 +2,11 @@
 
 namespace GrowChart\Command;
 
+use Exception;
 use GrowChart\Command;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Input\InputArgument;
-use Exception;
 
 /**
  * Clear data demo.
@@ -18,7 +18,7 @@ class ClearDataCommand extends Command
     protected function configure()
     {
         parent::configure();
-        $this->setName('grow:getdata')
+        $this->setName('grow:cleardata')
             ->setDescription('Get data centile')
             ->addArgument(
                 'growchartid',
