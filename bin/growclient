@@ -24,8 +24,8 @@ if (!file_exists($loader)) {
 
 require $loader;
 
-use Symfony\Component\Console\Application;
 use GrowChart\Command;
+use Symfony\Component\Console\Application;
 
 $application = new Application('GROW Console Client', '0.0.1');
 $application->setCatchExceptions(true);
