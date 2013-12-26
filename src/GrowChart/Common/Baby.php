@@ -13,6 +13,7 @@ class Baby extends AbstractCommon
     public $babygender;
     public $babyname;
     public $babynr;
+    public $previousgrowchartid;
 
 
     public function toArray()
@@ -24,7 +25,8 @@ class Baby extends AbstractCommon
             'birthgestation'         => $this->birthgestation,
             'birthweight'            => $this->birthweight,
             'babygender'             => $this->babygender,
-            'babyname'               => $this->babyname
+            'babyname'               => $this->babyname,
+            'previousgrowchartid'  => $this->previousgrowchartid
         );
     }
 
@@ -106,5 +108,15 @@ class Baby extends AbstractCommon
     public function setBabynr($babynr)
     {
         $this->babynr = $babynr;
+    }
+    
+    public function getPreviousGrowchartid()
+    {
+        return $this->previousgrowchartid;
+    }
+
+    public function setPreviousGrowchartid($previousgrowchartid)
+    {
+        $this->previousgrowchartid = $previousgrowchartid;
     }
 }

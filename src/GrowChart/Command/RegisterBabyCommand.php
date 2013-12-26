@@ -34,6 +34,12 @@ class RegisterBabyCommand extends Command
         $growchartid = $input->getArgument('growchartid');
 
         $dialog = $this->getHelperSet()->get('dialog');
+        
+        $previousgrowchartid = $dialog->ask(
+            $output,
+            '<info>Please entry the previous growchartid</info>'
+        );
+        
         $babydob = $dialog->ask(
             $output,
             '<info>Please entry the baby birth (YYYYMMDD):</info>'
@@ -56,15 +62,16 @@ class RegisterBabyCommand extends Command
             '<info>Please entry birth gestation:</info>'
         );
         
-        $birth = new Baby();
-        $birth->setBabydob($babydob);
-        $birth->setBabygender($babygender);
-        $birth->setBirthgestation($birthgestation);
-        $birth->setBirthweight($birthweight);
-        $birth->setGrowchartid($growchartid);
+        $baby = new Baby();
+        $baby->setBabydob($babydob);
+        $baby->setBabygender($babygender);
+        $baby->setBirthgestation($birthgestation);
+        $baby->setBirthweight($birthweight);
+        $baby->setGrowchartid($growchartid);
+        $baby->setPreviousGrowchartid($previousgrowchartid);
 
         try {
-            $res = $this->client->registerBaby($birth);
+            $res = $this->client->registerBaby($baby);
         } catch (Exception $ex) {
             $output->writeln('<error>' . $ex->getMessage() . '</error>');
         }
