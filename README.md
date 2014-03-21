@@ -16,6 +16,7 @@ You can install the through the composer.
 
 ## Usage
 
+```php
     use GrowClient;
     use GrowChart\Common\Pregnancy;
     
@@ -36,4 +37,4 @@ You can install the through the composer.
     $chart = $client->registerPregnancy($preg);
     
     print_r($chart);
-
+```
