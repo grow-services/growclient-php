@@ -14,19 +14,23 @@ class ChartPdf extends AbstractCommon
     public $babygender;
     public $babygestation;
     public $babybirthweight;
+    public $displayp95Line = false;
+    public $gridlinebyweight = false;
     
     public function toArray()
     {
         return array(
-            'growchartid'       => $this->growchartid,
-            'firstname'         => $this->firstname,
-            'lastname'          => $this->lastname,
-            'maternaldob'       => $this->maternaldob,
-            'reference'         => $this->reference,
-            'babyname'          => $this->babyname,
-            'babygender'        => $this->babygender,
-            'babygestation'     => $this->babygestation,
-            'babybirthweight'   => $this->babybirthweight
+            'growchartid'      => $this->growchartid,
+            'firstname'        => $this->firstname,
+            'lastname'         => $this->lastname,
+            'maternaldob'      => $this->maternaldob,
+            'reference'        => $this->reference,
+            'babyname'         => $this->babyname,
+            'babygender'       => $this->babygender,
+            'babygestation'    => $this->babygestation,
+            'babybirthweight'  => $this->babybirthweight,
+            'displayp95line'   => $this->displayp95Line === true ? 'true' : 'false',
+            'gridlinebyweight' => $this->gridlinebyweight === true ? 'true' : 'false'
         );
     }
 
@@ -128,5 +132,15 @@ class ChartPdf extends AbstractCommon
     public function setBabybirthweight($babybirthweight)
     {
         $this->babybirthweight = $babybirthweight;
+    }
+    
+    public function displayP95Line()
+    {
+        $this->displayp95Line =ture;
+    }
+    
+    public function hideP95Line()
+    {
+        $this->displayp95Line = false;
     }
 }

@@ -15,6 +15,8 @@ class Chart extends AbstractCommon
     public $language = 'en_Uk';
     public $growchartid;
     public $reference;
+    public $displayp95Line = false;
+    public $gridlinebyweight = false;
 
     private static $supportedLanguage = array('en_UK', 'zh_CN', 'nl_NL');
 
@@ -128,14 +130,26 @@ class Chart extends AbstractCommon
     public function toArray()
     {
         return array(
-            'growchartid' => $this->getGrowchartid(),
-            'reference'   => $this->getReference(),
-            'height'      => $this->getHeight(),
-            'width'       => $this->getWidth(),
-            'language'    => $this->getLanguage(),
-            'firstname'   => $this->getFirstname(),
-            'lastname'    => $this->getLanguage(),
-            'maternaldob' => $this->getMaternaldob()
+            'growchartid'      => $this->getGrowchartid(),
+            'reference'        => $this->getReference(),
+            'height'           => $this->getHeight(),
+            'width'            => $this->getWidth(),
+            'language'         => $this->getLanguage(),
+            'firstname'        => $this->getFirstname(),
+            'lastname'         => $this->getLanguage(),
+            'maternaldob'      => $this->getMaternaldob(),
+            'displayp95line'   => $this->displayp95Line === true ? 'true' : 'false',
+            'gridlinebyweight' => $this->gridlinebyweight === true ? 'true' : 'false'
         );
+    }
+    
+    public function displayP95Line()
+    {
+        $this->displayp95Line =ture;
+    }
+    
+    public function hideP95Line()
+    {
+        $this->displayp95Line = false;
     }
 }
