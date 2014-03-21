@@ -15,7 +15,7 @@ class Chart extends AbstractCommon
     public $language = 'en_Uk';
     public $growchartid;
     public $reference;
-    public $displayp95Line = false;
+    public $displayp95line = false;
     public $gridlinebyweight = false;
 
     private static $supportedLanguage = array('en_UK', 'zh_CN', 'nl_NL');
@@ -138,23 +138,23 @@ class Chart extends AbstractCommon
             'firstname'        => $this->getFirstname(),
             'lastname'         => $this->getLanguage(),
             'maternaldob'      => $this->getMaternaldob(),
-            'displayp95line'   => $this->displayp95Line === true ? 'true' : 'false',
+            'displayp95line'   => $this->displayp95line === true ? 'true' : 'false',
             'gridlinebyweight' => $this->gridlinebyweight === true ? 'true' : 'false'
         );
     }
     
     public function displayP95Line()
     {
-        $this->displayp95Line = true;
+        $this->displayp95line = 'true';
     }
     
     public function hideP95Line()
     {
-        $this->displayp95Line = false;
+        $this->displayp95line = false;
     }
     
     public function gridLineByWeight()
     {
-        $this->gridlinebyweight = true;
+        $this->gridlinebyweight = 'true';
     }
 }

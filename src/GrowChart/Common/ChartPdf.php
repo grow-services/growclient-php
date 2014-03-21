@@ -14,7 +14,7 @@ class ChartPdf extends AbstractCommon
     public $babygender;
     public $babygestation;
     public $babybirthweight;
-    public $displayp95Line = false;
+    public $displayp95line = false;
     public $gridlinebyweight = false;
     
     public function toArray()
@@ -29,7 +29,7 @@ class ChartPdf extends AbstractCommon
             'babygender'       => $this->babygender,
             'babygestation'    => $this->babygestation,
             'babybirthweight'  => $this->babybirthweight,
-            'displayp95line'   => $this->displayp95Line === true ? 'true' : 'false',
+            'displayp95line'   => $this->displayp95line === true ? 'true' : 'false',
             'gridlinebyweight' => $this->gridlinebyweight === true ? 'true' : 'false'
         );
     }
@@ -136,16 +136,16 @@ class ChartPdf extends AbstractCommon
     
     public function displayP95Line()
     {
-        $this->displayp95Line = true;
+        $this->displayp95line = 'true';
     }
     
     public function hideP95Line()
     {
-        $this->displayp95Line = false;
+        $this->displayp95line = false;
     }
     
     public function gridLineByWeight()
     {
-        $this->gridlinebyweight = true;
+        $this->gridlinebyweight = 'true';
     }
 }
