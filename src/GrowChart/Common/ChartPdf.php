@@ -29,8 +29,8 @@ class ChartPdf extends AbstractCommon
             'babygender'       => $this->babygender,
             'babygestation'    => $this->babygestation,
             'babybirthweight'  => $this->babybirthweight,
-            'displayp95line'   => $this->displayp95line === true ? 'true' : 'false',
-            'gridlinebyweight' => $this->gridlinebyweight === true ? 'true' : 'false'
+            'displayp95line'   => $this->displayp95line,
+            'gridlinebyweight' => $this->gridlinebyweight
         );
     }
 

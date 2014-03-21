@@ -138,8 +138,8 @@ class Chart extends AbstractCommon
             'firstname'        => $this->getFirstname(),
             'lastname'         => $this->getLanguage(),
             'maternaldob'      => $this->getMaternaldob(),
-            'displayp95line'   => $this->displayp95line === true ? 'true' : 'false',
-            'gridlinebyweight' => $this->gridlinebyweight === true ? 'true' : 'false'
+            'displayp95line'   => $this->displayp95line,
+            'gridlinebyweight' => $this->gridlinebyweight
         );
     }
     
