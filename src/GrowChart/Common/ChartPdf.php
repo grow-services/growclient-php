@@ -143,4 +143,9 @@ class ChartPdf extends AbstractCommon
     {
         $this->displayp95Line = false;
     }
+    
+    public function gridLineByWeight()
+    {
+        $this->gridlinebyweight = true;
+    }
 }
