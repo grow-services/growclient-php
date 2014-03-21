@@ -136,7 +136,7 @@ class ChartPdf extends AbstractCommon
     
     public function displayP95Line()
     {
-        $this->displayp95Line =ture;
+        $this->displayp95Line = true;
     }
     
     public function hideP95Line()
