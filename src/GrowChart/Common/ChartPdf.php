@@ -16,7 +16,9 @@ class ChartPdf extends AbstractCommon
     public $babybirthweight;
     public $displayp95line = false;
     public $gridlinebyweight = false;
-    
+    public $grayscale = false;
+
+
     public function toArray()
     {
         return array(
@@ -30,7 +32,8 @@ class ChartPdf extends AbstractCommon
             'babygestation'    => $this->babygestation,
             'babybirthweight'  => $this->babybirthweight,
             'displayp95line'   => $this->displayp95line,
-            'gridlinebyweight' => $this->gridlinebyweight
+            'gridlinebyweight' => $this->gridlinebyweight,
+            'grayscale' => $this->grayscale
         );
     }
 
@@ -147,5 +150,10 @@ class ChartPdf extends AbstractCommon
     public function gridLineByWeight()
     {
         $this->gridlinebyweight = 'true';
+    }
+    
+    public function grayScale()
+    {
+        $this->grayscale = 'true';
     }
 }

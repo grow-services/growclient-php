@@ -17,6 +17,7 @@ class Chart extends AbstractCommon
     public $reference;
     public $displayp95line = false;
     public $gridlinebyweight = false;
+    public $grayscale = false;
 
     private static $supportedLanguage = array('en_UK', 'zh_CN', 'nl_NL');
 
@@ -139,7 +140,8 @@ class Chart extends AbstractCommon
             'lastname'         => $this->getLanguage(),
             'maternaldob'      => $this->getMaternaldob(),
             'displayp95line'   => $this->displayp95line,
-            'gridlinebyweight' => $this->gridlinebyweight
+            'gridlinebyweight' => $this->gridlinebyweight,
+            'grayscale'        => $this->grayscale
         );
     }
     
@@ -156,5 +158,10 @@ class Chart extends AbstractCommon
     public function gridLineByWeight()
     {
         $this->gridlinebyweight = 'true';
+    }
+    
+    public function grayScale()
+    {
+        $this->grayscale = 'true';
     }
 }
