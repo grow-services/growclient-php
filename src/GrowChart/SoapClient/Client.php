@@ -43,8 +43,8 @@ class Client extends AbstractClient
         }
 
         try {
-            $response = $this->soapClient->__soapCall($function_name, $arguments);
-            return $response;
+            $response = $this->soapClient->__soapCall($function_name, array('parameters' => $arguments));
+            return $response->{$function_name . 'Result'};
         } catch (Exception $ex) {
             $this->isError = true;
             $this->errorCode = $ex->getCode();
