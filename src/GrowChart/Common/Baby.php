@@ -14,6 +14,7 @@ class Baby extends AbstractCommon
     public $babyname;
     public $babynr;
     public $previousgrowchartid;
+    protected $rootName = 'baby';
 
 
     public function toArray()
