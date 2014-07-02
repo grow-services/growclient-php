@@ -17,23 +17,25 @@ class ChartPdf extends AbstractCommon
     public $displayp95line = false;
     public $gridlinebyweight = false;
     public $grayscale = false;
+    public $growchartidPrefix;
 
 
     public function toArray()
     {
         return array(
-            'growchartid'      => $this->growchartid,
-            'firstname'        => $this->firstname,
-            'lastname'         => $this->lastname,
-            'maternaldob'      => $this->maternaldob,
-            'reference'        => $this->reference,
-            'babyname'         => $this->babyname,
-            'babygender'       => $this->babygender,
-            'babygestation'    => $this->babygestation,
-            'babybirthweight'  => $this->babybirthweight,
-            'displayp95line'   => $this->displayp95line,
-            'gridlinebyweight' => $this->gridlinebyweight,
-            'grayscale' => $this->grayscale
+            'growchartid'       => $this->growchartid,
+            'firstname'         => $this->firstname,
+            'lastname'          => $this->lastname,
+            'maternaldob'       => $this->maternaldob,
+            'reference'         => $this->reference,
+            'babyname'          => $this->babyname,
+            'babygender'        => $this->babygender,
+            'babygestation'     => $this->babygestation,
+            'babybirthweight'   => $this->babybirthweight,
+            'displayp95line'    => $this->displayp95line,
+            'gridlinebyweight'  => $this->gridlinebyweight,
+            'grayscale'         => $this->grayscale,
+            'growchartidprefix' => $this->growchartidPrefix
         );
     }
 
@@ -155,5 +157,15 @@ class ChartPdf extends AbstractCommon
     public function grayScale()
     {
         $this->grayscale = 'true';
+    }
+    
+    public function getGrowchartidPrefix()
+    {
+        return $this->growchartidPrefix;
+    }
+
+    public function setGrowchartidPrefix($growchartidPrefix)
+    {
+        $this->growchartidPrefix = $growchartidPrefix;
     }
 }
