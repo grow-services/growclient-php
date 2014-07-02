@@ -195,4 +195,16 @@ class Client extends AbstractClient
         }
         return $res;
     }
+    
+    public function getPregnancy($growchartid)
+    {
+        $url = $this->buildQuery('/rest/pregnancy/' . $growchartid);
+        $res = $this->doRequest($url);
+        
+        if ($this->isError) {
+            throw new RuntimeException($this->errorMessage, $this->errorCode);
+        }
+        
+        return $res;
+    }
 }

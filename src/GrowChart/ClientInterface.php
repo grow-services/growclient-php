@@ -31,4 +31,6 @@ interface ClientInterface
     public function getPDF(ChartPdf $chartpdf, $filename = null);
     
     public function clearData($growchartid);
+    
+    public function getPregnancy($growchartid);
 }

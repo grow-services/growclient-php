@@ -109,4 +109,9 @@ class Client extends AbstractClient
     {
         return $this->call('registerBaby', $baby->getSoapParams());
     }
+    
+    public function getPregnancy($growchartid)
+    {
+        return $this->call('getPregnancy', array('growchartid' => $growchartid));
+    }
 }
