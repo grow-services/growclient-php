@@ -37,4 +37,5 @@ $application->add(new Command\RegisterBabyCommand());
 $application->add(new Command\GetDataCommand());
 $application->add(new Command\GetPdfCommand());
 $application->add(new Command\ClearDataCommand());
+$application->add(new Command\GetPregnancyCommand());
 $application->run();
