@@ -17,7 +17,7 @@ class ChartPdf extends AbstractCommon
     public $displayp95line = false;
     public $gridlinebyweight = false;
     public $grayscale = false;
-    public $growchartidPrefix;
+    public $growchartidprefix;
 
 
     public function toArray()
@@ -35,7 +35,7 @@ class ChartPdf extends AbstractCommon
             'displayp95line'    => $this->displayp95line,
             'gridlinebyweight'  => $this->gridlinebyweight,
             'grayscale'         => $this->grayscale,
-            'growchartidprefix' => $this->growchartidPrefix
+            'growchartidprefix' => $this->growchartidprefix
         );
     }
 
@@ -161,11 +161,11 @@ class ChartPdf extends AbstractCommon
     
     public function getGrowchartidPrefix()
     {
-        return $this->growchartidPrefix;
+        return $this->growchartidprefix;
     }
 
     public function setGrowchartidPrefix($growchartidPrefix)
     {
-        $this->growchartidPrefix = $growchartidPrefix;
+        $this->growchartidprefix = $growchartidPrefix;
     }
 }
