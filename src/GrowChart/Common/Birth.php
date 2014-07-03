@@ -9,6 +9,7 @@ class Birth extends AbstractCommon
     public $birthweight;
     public $babygender;
     public $antenataliugrdetection;
+    public $suspected;
 
     public function toArray()
     {
@@ -18,6 +19,7 @@ class Birth extends AbstractCommon
             'birthweight'            => $this->birthweight,
             'babygender'             => $this->babygender,
             'antenataliugrdetection' => $this->antenataliugrdetection,
+	    'suspected'		     => $this->suspected,
         );
     }
     
@@ -69,5 +71,15 @@ class Birth extends AbstractCommon
     public function setAntenataliugrdetection($antenataliugrdetection)
     {
         $this->antenataliugrdetection = $antenataliugrdetection;
+    }
+
+    public function setSuspected($suspected)
+    {
+	$this->suspected = $suspected;
+    }
+
+    public function getSuspected()
+    {
+	return $this->suspected;
     }
 }
