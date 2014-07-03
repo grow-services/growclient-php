@@ -14,6 +14,8 @@ class Baby extends AbstractCommon
     public $babyname;
     public $babynr;
     public $previousgrowchartid;
+    public $diagnosed;
+    public $suspected;
     protected $rootName = 'baby';
 
 
@@ -27,7 +29,9 @@ class Baby extends AbstractCommon
             'birthweight'            => $this->birthweight,
             'babygender'             => $this->babygender,
             'babyname'               => $this->babyname,
-            'previousgrowchartid'  => $this->previousgrowchartid
+            'previousgrowchartid'    => $this->previousgrowchartid,
+	    'diagnosed'              => $this->diagnosed,
+	    'suspected'              => $this->suspected
         );
     }
 
@@ -119,5 +123,25 @@ class Baby extends AbstractCommon
     public function setPreviousGrowchartid($previousgrowchartid)
     {
         $this->previousgrowchartid = $previousgrowchartid;
+    }
+
+    public function setSuspected($suspected)
+    {
+	$this->suspected = $suspected;
+    }
+
+    public function getSuspected()
+    {
+	return $this->suspected;
+    }
+
+    public function setDiagnosed($diagnosed)
+    {
+	$this->diagnosed = $diagnosed;
+    }
+
+    public function getDiagnosed()
+    {
+	return $this->diagnosed;
     }
 }
