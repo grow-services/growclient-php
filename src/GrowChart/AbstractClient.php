@@ -82,7 +82,7 @@ abstract class AbstractClient implements ClientInterface
      * @param string $url
      * @return string
      */
-    protected function httpRequest($url, $payload = null)
+    protected function httpRequest($url, $payload = null, $method = 'GET')
     {
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $url);
@@ -92,10 +92,18 @@ abstract class AbstractClient implements ClientInterface
         curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
         
         if (!is_null($payload)) {
-            curl_setopt($curl, CURLOPT_POST, 1);
+            $method = 'post';
             curl_setopt($curl, CURLOPT_POSTFIELDS, $payload);
         }
-        
+
+        switch (strtolower($method)) {
+            case 'post':
+                curl_setopt($curl, CURLOPT_POST, 1);
+                break;
+            case 'put':
+                curl_setopt($curl, CURLOPT_PUT, 1);
+                break;
+        }
         $response = curl_exec($curl);
         if (($error = curl_error($curl))) {
             $this->isError = true;
