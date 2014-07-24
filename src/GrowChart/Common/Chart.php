@@ -137,7 +137,7 @@ class Chart extends AbstractCommon
             'width'            => $this->getWidth(),
             'language'         => $this->getLanguage(),
             'firstname'        => $this->getFirstname(),
-            'lastname'         => $this->getLanguage(),
+            'lastname'         => $this->getLastname(),
             'maternaldob'      => $this->getMaternaldob(),
             'displayp95line'   => $this->displayp95line,
             'gridlinebyweight' => $this->gridlinebyweight,
