@@ -137,6 +137,7 @@ abstract class AbstractClient implements ClientInterface
                 $this->errorCode = (string) $res->code;
                 $this->errorMessage = (string) $res->message;
                 $this->isError = true;
+                throw new RuntimeException($this->errorMessage, $this->errorCode);
             }
             return $res;
         }

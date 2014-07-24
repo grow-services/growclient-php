@@ -26,10 +26,6 @@ class Client extends AbstractClient
             $pregnancy
         );
         $res = $this->doRequest($url);
-        if ($this->isError) {
-            throw new RuntimeException($this->errorMessage, $this->errorCode);
-        }
-        
         return (string) $res->growchartid;
     }
 
@@ -46,9 +42,6 @@ class Client extends AbstractClient
             $measurement
         );
         $res = $this->doRequest($url);
-        if ($this->isError) {
-            throw new RuntimeException($this->errorMessage, $this->errorCode);
-        }
         return $res;
     }
 
@@ -66,10 +59,6 @@ class Client extends AbstractClient
         );
         
         $res = $this->doRequest($url);
-        
-        if ($this->isError) {
-            throw new RuntimeException($this->errorMessage, $this->errorCode);
-        }
         
         $imageurl = (string) $res->url;
         if ($filename) {
@@ -119,10 +108,6 @@ class Client extends AbstractClient
             array('growchartid' => $growchartid)
         );
         $res = $this->doRequest($url);
-
-        if ($this->isError) {
-            throw new RuntimeException($this->errorMessage, $this->errorCode);
-        }
         return $res;
     }
                                                                                                 
@@ -141,10 +126,6 @@ class Client extends AbstractClient
         );
         
         $res = $this->doRequest($url);
-        
-        if ($this->isError) {
-            throw new RuntimeException($this->errorMessage, $this->errorCode);
-        }
         
         $pdfurl = (string) $res->url;
         if ($filename) {
@@ -169,9 +150,6 @@ class Client extends AbstractClient
         
         $res = $this->doRequest($url);
         
-        if ($this->isError) {
-            throw new RuntimeException($this->errorMessage, $this->errorCode);
-        }
         return $res;
     }
 
@@ -190,9 +168,6 @@ class Client extends AbstractClient
         
         $res = $this->doRequest($url);
         
-        if ($this->isError) {
-            throw new RuntimeException($this->errorMessage, $this->errorCode);
-        }
         return $res;
     }
     
@@ -200,11 +175,6 @@ class Client extends AbstractClient
     {
         $url = $this->buildQuery('/rest/pregnancy/' . $growchartid);
         $res = $this->doRequest($url);
-        
-        if ($this->isError) {
-            throw new RuntimeException($this->errorMessage, $this->errorCode);
-        }
-        
         return $res;
     }
 }

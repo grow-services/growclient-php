@@ -26,10 +26,6 @@ class Client extends AbstractClient
             $measurement->getXmlPayload()
         );
         
-        if ($this->isError) {
-            throw new RuntimeException($this->errorMessage, $this->errorCode);
-        }
-        
         return $res;
     }
 
@@ -39,10 +35,6 @@ class Client extends AbstractClient
             $this->buildQuery('/xml/getchartimage/'),
             $chart->getXmlPayload()
         );
-        
-        if ($this->isError) {
-            throw new RuntimeException($this->errorMessage, $this->errorCode);
-        }
         
         $imageurl = (string) $res->url;
         if ($filename) {
@@ -59,10 +51,6 @@ class Client extends AbstractClient
             $chartpdf->getXmlPayload()
         );
         
-        if ($this->isError) {
-            throw new RuntimeException($this->errorMessage, $this->errorCode);
-        }
-        
         $pdfurl = (string) $res->url;
         if ($filename) {
             $content = $this->httpRequest($pdfurl);
@@ -78,10 +66,6 @@ class Client extends AbstractClient
             $birth->getXmlPayload()
         );
         
-        if ($this->isError) {
-            throw new RuntimeException($this->errorMessage, $this->errorCode);
-        }
-        
         return $res;
     }
 
@@ -91,10 +75,6 @@ class Client extends AbstractClient
             $this->buildQuery('/xml/registerpregnancy/'),
             $pregnancy->getXmlPayload()
         );
-        
-        if ($this->isError) {
-            throw new RuntimeException($this->errorMessage, $this->errorCode);
-        }
         return (string) $res->growchartid;
     }
 
@@ -106,10 +86,6 @@ class Client extends AbstractClient
                 array('growchartid' => $growchartid)
             )
         );
-        
-        if ($this->isError) {
-            throw new RuntimeException($this->errorMessage, $this->errorCode);
-        }
         return $res;
     }
 
@@ -126,9 +102,6 @@ class Client extends AbstractClient
             )
         );
         
-        if ($this->isError) {
-            throw new RuntimeException($this->errorMessage, $this->errorCode);
-        }
         return $res;
     }
 
@@ -141,9 +114,6 @@ class Client extends AbstractClient
             $baby->getXmlPayload()
         );
         
-        if ($this->isError) {
-            throw new RuntimeException($this->errorMessage, $this->errorCode);
-        }
         return $res;
     }
     
@@ -152,9 +122,6 @@ class Client extends AbstractClient
         $url = $this->buildQuery('/xml/pregnancy/' . $growchartid);
         $res = $this->doRequest($url);
         
-        if ($this->isError) {
-            throw new RuntimeException($this->errorMessage, $this->errorCode);
-        }
         return $res;
     }
 }
