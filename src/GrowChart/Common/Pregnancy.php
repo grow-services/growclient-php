@@ -35,9 +35,14 @@ class Pregnancy extends AbstractCommon
     protected $rootName = 'pregnancy';
 
     /**
-     * @var Pregnancy
+     * @var Pregnancy[]
      */
     private $items;
+
+    /**
+     * @var Chart
+     */
+    private $chart;
 
 
     public function getGrowchartid()
@@ -169,7 +174,7 @@ class Pregnancy extends AbstractCommon
     }
 
     /**
-     * @param \GrowChart\Common\Pregnancy $items
+     * @param \GrowChart\Common\Pregnancy[] $items
      */
     public function setItems($items)
     {
@@ -177,7 +182,7 @@ class Pregnancy extends AbstractCommon
     }
 
     /**
-     * @return \GrowChart\Common\Pregnancy
+     * @return \GrowChart\Common\Pregnancy[]
      */
     public function getItems()
     {
@@ -193,6 +198,22 @@ class Pregnancy extends AbstractCommon
     public function addItem($item)
     {
         $this->items[] = $item;
+    }
+
+    /**
+     * @param \GrowChart\Common\Chart $chart
+     */
+    public function setChart($chart)
+    {
+        $this->chart = $chart;
+    }
+
+    /**
+     * @return \GrowChart\Common\Chart
+     */
+    public function getChart()
+    {
+        return $this->chart;
     }
 
     public function toArray()
@@ -225,6 +246,11 @@ class Pregnancy extends AbstractCommon
                 $m->setGrowchartid($growchartid);
                 $params['measurements'][] = $m->toArray();
             }
+        }
+
+        if ($this->chart) {
+            $this->chart->setGrowchartid($growchartid);
+            $params['chart'] = $this->chart->toArray();
         }
 
         return $params;

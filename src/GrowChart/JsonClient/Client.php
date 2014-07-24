@@ -36,7 +36,7 @@ class Client extends AbstractClient
         $url = $this->buildQuery('/v2/pregnancy/');
         $res = $this->doRequest($url, $pregnancy->toJson(), 'POST');
 
-        return (string)$res->growchartid;
+        return $res;
     }
 
     public function addMeasurement(Measurement $measurement)
