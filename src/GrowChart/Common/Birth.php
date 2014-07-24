@@ -19,7 +19,7 @@ class Birth extends AbstractCommon
             'birthweight'            => $this->birthweight,
             'babygender'             => $this->babygender,
             'antenataliugrdetection' => $this->antenataliugrdetection,
-	    'suspected'		     => $this->suspected,
+	        'suspected'		         => $this->suspected,
         );
     }
     

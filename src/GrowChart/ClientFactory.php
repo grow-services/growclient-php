@@ -23,7 +23,8 @@ class ClientFactory
     private $clientTypes = array(
         'rest',
         'xml',
-        'soap'
+        'soap',
+        'json'
     );
     
     private function __construct()

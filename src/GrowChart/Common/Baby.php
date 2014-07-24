@@ -14,10 +14,12 @@ class Baby extends AbstractCommon
     public $babyname;
     public $babynr;
     public $previousgrowchartid;
-    public $diagnosed;
-    public $suspected;
     protected $rootName = 'baby';
 
+    /**
+     * @var Baby[]
+     */
+    private $items;
 
     public function toArray()
     {
@@ -30,9 +32,16 @@ class Baby extends AbstractCommon
             'babygender'             => $this->babygender,
             'babyname'               => $this->babyname,
             'previousgrowchartid'    => $this->previousgrowchartid,
-	    'diagnosed'              => $this->diagnosed,
-	    'suspected'              => $this->suspected
         );
+    }
+
+    public function toJson()
+    {
+        $items = array();
+        foreach ($this->getItems() as $item) {
+            $items[] = $item->toArray();
+        }
+        return json_encode($items);
     }
 
     public function getGrowchartid()
@@ -94,7 +103,7 @@ class Baby extends AbstractCommon
     {
         $this->birthheight = $birthheight;
     }
-    
+
     public function getBabyName()
     {
         return $this->babyname;
@@ -104,7 +113,7 @@ class Baby extends AbstractCommon
     {
         $this->babyname = $babyname;
     }
-    
+
     public function getBabynr()
     {
         return $this->babynr;
@@ -114,7 +123,7 @@ class Baby extends AbstractCommon
     {
         $this->babynr = $babynr;
     }
-    
+
     public function getPreviousGrowchartid()
     {
         return $this->previousgrowchartid;
@@ -125,23 +134,27 @@ class Baby extends AbstractCommon
         $this->previousgrowchartid = $previousgrowchartid;
     }
 
-    public function setSuspected($suspected)
+    /**
+     * @param \GrowChart\Common\Baby[] $items
+     */
+    public function setItems($items)
     {
-	$this->suspected = $suspected;
+        $this->items = $items;
     }
 
-    public function getSuspected()
+    /**
+     * @return \GrowChart\Common\Baby[]
+     */
+    public function getItems()
     {
-	return $this->suspected;
+        if (!$this->items) {
+            $this->items[] = $this;
+        }
+        return $this->items;
     }
 
-    public function setDiagnosed($diagnosed)
+    public function addItem($baby)
     {
-	$this->diagnosed = $diagnosed;
-    }
-
-    public function getDiagnosed()
-    {
-	return $this->diagnosed;
+        $this->items[] = $baby;
     }
 }

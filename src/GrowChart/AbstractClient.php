@@ -62,7 +62,6 @@ abstract class AbstractClient implements ClientInterface
     /**
      * Build query url.
      * @param string $path
-     * @param string $token
      * @param mixed $data
      * @return string $url
      */
@@ -70,7 +69,7 @@ abstract class AbstractClient implements ClientInterface
     {
         $url = rtrim($this->baseurl, '/') . $path . '?licensekey=' . $this->userkey;
         $url .= '&token=' . $this->generateToken();
-        
+
         if ($data) {
             $url .= '&' . http_build_query($data);
         }
@@ -80,6 +79,8 @@ abstract class AbstractClient implements ClientInterface
     /**
      * http request.
      * @param string $url
+     * @param string $payload
+     * @param string $method
      * @return string
      */
     protected function httpRequest($url, $payload = null, $method = 'GET')
@@ -90,7 +91,7 @@ abstract class AbstractClient implements ClientInterface
         curl_setopt($curl, CURLOPT_HEADER, 0);
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
-        
+
         if (!is_null($payload)) {
             $method = 'post';
             curl_setopt($curl, CURLOPT_POSTFIELDS, $payload);
@@ -144,13 +145,15 @@ abstract class AbstractClient implements ClientInterface
     
     /**
      * Start request
-     * @param type $url
+     *
+     * @param string $url
      * @param string $payload
-     * @return type
+     * @param string $method
+     * @return mixed
      */
-    protected function doRequest($url, $payload = null)
+    protected function doRequest($url, $payload = null, $method = 'GET')
     {
-        $response = $this->httpRequest($url, $payload);
+        $response = $this->httpRequest($url, $payload, $method);
         return $this->verifyResponse($response);
     }
 

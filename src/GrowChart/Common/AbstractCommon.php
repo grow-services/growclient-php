@@ -37,4 +37,9 @@ abstract class AbstractCommon
         $xml->formatOutput = true;
         return $xml->saveXML();
     }
+
+    public function toJson()
+    {
+        return json_encode($this->toArray());
+    }
 }

@@ -19,6 +19,11 @@ class Measurement extends AbstractCommon
      */
     public static $measurements = array();
 
+    /**
+     * @var Measurement[]
+     */
+    private $items;
+
     public function getGrowchartid()
     {
         return $this->growchartid;
@@ -77,11 +82,46 @@ class Measurement extends AbstractCommon
         );
     }
 
+    public function toJson()
+    {
+        $items = array();
+        foreach ($this->getItems() as $item) {
+            $items[] = $item->toArray();
+        }
+        return json_encode($items);
+    }
+
     public static function addMesurements($measurement)
     {
         self::$measurements[] = $measurement;
     }
 
+    /**
+     * @param \GrowChart\Common\Measurement[] $items
+     */
+    public function setItems($items)
+    {
+        $this->items = $items;
+    }
+
+    /**
+     * @return \GrowChart\Common\Measurement[]
+     */
+    public function getItems()
+    {
+        if (!$this->items) {
+            $this->items[] = $this;
+        }
+        return $this->items;
+    }
+
+    /**
+     * @param Measurement $measurement
+     */
+    public function addItem($measurement)
+    {
+        $this->items[] = $measurement;
+    }
 
     public function getXmlPayload()
     {
