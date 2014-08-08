@@ -140,6 +140,6 @@ class Client extends AbstractClient
         $url = $this->buildQuery(
             sprintf('/xml/pregnancy/%s/measurement/%s', $growchartid, $measurementuuid)
         );
-        return $this->doRequest($url, $measurement->getXmlPayload());
+        return $this->doRequest($url, $measurement->getXmlPayload(), 'PUT');
     }
 }

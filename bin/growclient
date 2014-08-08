@@ -38,4 +38,6 @@ $application->add(new Command\GetDataCommand());
 $application->add(new Command\GetPdfCommand());
 $application->add(new Command\ClearDataCommand());
 $application->add(new Command\GetPregnancyCommand());
+$application->add(new Command\UpdateMeasurementCommand());
+$application->add(new Command\RemoveMeasurementCommand());
 $application->run();

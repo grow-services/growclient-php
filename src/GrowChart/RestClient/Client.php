@@ -191,8 +191,9 @@ class Client extends AbstractClient
         $growchartid = $measurement->getGrowchartid();
         $measurementuuid = $measurement->getUuid();
         $url = $this->buildQuery(
-            sprintf('/rest/pregnancy/%s/measurement/%s', $growchartid, $measurementuuid)
+            sprintf('/rest/pregnancy/%s/measurement/%s', $growchartid, $measurementuuid),
+            $measurement
         );
-        return $this->doRequest($url, $measurement);
+        return $this->doRequest($url, null, 'PUT');
     }
 }

@@ -93,16 +93,15 @@ abstract class AbstractClient implements ClientInterface
         curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
 
         if (!is_null($payload)) {
-            $method = 'post';
             curl_setopt($curl, CURLOPT_POSTFIELDS, $payload);
+            if ($method == 'GET') {
+                $method = 'POST';
+            }
         }
 
         switch (strtolower($method)) {
             case 'post':
                 curl_setopt($curl, CURLOPT_POST, 1);
-                break;
-            case 'put':
-                curl_setopt($curl, CURLOPT_PUT, 1);
                 break;
             default:
                 curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $method);
