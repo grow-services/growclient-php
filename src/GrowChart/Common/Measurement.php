@@ -9,6 +9,7 @@ class Measurement extends AbstractCommon
 {
 
     public $growchartid;
+    public $uuid;
     public $value;
     public $type;
     public $date;
@@ -72,14 +73,31 @@ class Measurement extends AbstractCommon
         return self::$measurementTypes;
     }
 
+    public function setUuid($uuid)
+    {
+        $this->uuid = $uuid;
+    }
+
+    public function getUuid()
+    {
+        return $this->uuid;
+    }
+
     protected function toArray()
     {
-        return array(
+        $m = array(
             'growchartid' => $this->getGrowchartid(),
             'date'        => $this->getDate(),
             'type'        => $this->getType(),
-            'value'       => $this->getValue()
+            'value'       => $this->getValue(),
         );
+
+        if (($uuid = $this->getUuid())) {
+            $m['uuid'] = $uuid;
+        }
+        return $m;
+
+
     }
 
     public function toJson()

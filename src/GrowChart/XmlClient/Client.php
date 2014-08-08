@@ -124,4 +124,22 @@ class Client extends AbstractClient
         
         return $res;
     }
+
+    public function removeMeasurement($growchartid, $measurementuuid)
+    {
+        $url = $this->buildQuery(
+            sprintf('/xml/pregnancy/%s/measurement/%s', $growchartid, $measurementuuid)
+        );
+        return $this->doRequest($url, null, 'DELETE');
+    }
+
+    public function updateMeasurement(Measurement $measurement)
+    {
+        $growchartid = $measurement->getGrowchartid();
+        $measurementuuid = $measurement->getUuid();
+        $url = $this->buildQuery(
+            sprintf('/xml/pregnancy/%s/measurement/%s', $growchartid, $measurementuuid)
+        );
+        return $this->doRequest($url, $measurement->getXmlPayload());
+    }
 }

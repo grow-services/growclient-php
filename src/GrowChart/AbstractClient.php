@@ -104,6 +104,8 @@ abstract class AbstractClient implements ClientInterface
             case 'put':
                 curl_setopt($curl, CURLOPT_PUT, 1);
                 break;
+            default:
+                curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $method);
         }
         $response = curl_exec($curl);
         if (($error = curl_error($curl))) {

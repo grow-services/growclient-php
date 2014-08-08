@@ -33,4 +33,8 @@ interface ClientInterface
     public function clearData($growchartid);
     
     public function getPregnancy($growchartid);
+
+    public function removeMeasurement($growchartid, $measurementuuid);
+
+    public function updateMeasurement(Measurement $measurement);
 }

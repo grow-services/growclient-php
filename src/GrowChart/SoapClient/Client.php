@@ -114,4 +114,14 @@ class Client extends AbstractClient
     {
         return $this->call('getPregnancy', array('growchartid' => $growchartid));
     }
+
+    public function removeMeasurement($growchartid, $measurementuuid)
+    {
+        return $this->call('removeMeasurement', array('growchartid' => $growchartid, 'measurementuuid' => $measurementuuid));
+    }
+
+    public function updateMeasurement(Measurement $measurement)
+    {
+        return $this->call('updateMeasurement', $measurement->getSoapParams());
+    }
 }
