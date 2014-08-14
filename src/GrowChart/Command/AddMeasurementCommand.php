@@ -63,6 +63,6 @@ class AddMeasurementCommand extends Command
             $output->writeln('<error>' . $ex->getMessage() . '</error>');
             exit;
         }
-        $output->writeln($res);
+        $output->writeln(json_encode($res));
     }
 }

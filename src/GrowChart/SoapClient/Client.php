@@ -56,7 +56,7 @@ class Client extends AbstractClient
 
     public function addMeasurement(Measurement $measurement)
     {
-        $this->call('addMeasurement', $measurement->getSoapParams());
+        return $this->call('addMeasurement', $measurement->getSoapParams());
     }
 
     public function getChartImage(Chart $chart, $filename = null)
