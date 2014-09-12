@@ -23,7 +23,7 @@
         "issues": "https://github.com/grow-services/growclient-php/issues"
     },
     "require": {
-        "symfony/console": "2.4.*@dev"
+        "symfony/console": "~2.4"
     },
     "bin": ["bin/growclient"],
     "autoload": {
