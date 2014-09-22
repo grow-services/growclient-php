@@ -196,4 +196,9 @@ class Client extends AbstractClient
         );
         return $this->doRequest($url, null, 'PUT');
     }
+
+    public function registerPregnancies($pregnancies)
+    {
+        throw new \Exception('This is not support yet.');
+    }
 }

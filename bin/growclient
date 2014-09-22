@@ -40,4 +40,5 @@ $application->add(new Command\ClearDataCommand());
 $application->add(new Command\GetPregnancyCommand());
 $application->add(new Command\UpdateMeasurementCommand());
 $application->add(new Command\RemoveMeasurementCommand());
+$application->add(new Command\RegisterPregnanciesCommand());
 $application->run();

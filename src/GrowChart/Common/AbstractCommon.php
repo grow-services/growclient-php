@@ -42,4 +42,19 @@ abstract class AbstractCommon
     {
         return json_encode($this->toArray());
     }
+
+    public function arrayToXml($elements, $nodeName = 'item', $xml = null)
+    {
+        foreach ($elements as $k => $ele) {
+            if (is_array($ele)) {
+                $node = new \DOMElement($k);
+                $this->arrayToXml($k, $ele, $node);
+            } else {
+                if ($ele) {
+                    $node = new \DOMElement($k, $ele);
+                    $xml->appendChild($node);
+                }
+            }
+        }
+    }
 }

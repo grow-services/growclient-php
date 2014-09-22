@@ -144,4 +144,9 @@ class Client extends AbstractClient
 
         return $this->doRequest($url, $measurement->toJson(), 'PUT');
     }
+
+    public function registerPregnancies($pregnancies)
+    {
+
+    }
 }

@@ -10,6 +10,7 @@ use GrowChart\Common\ChartPdf;
 use GrowChart\Common\Measurement;
 use GrowChart\Common\Pregnancy;
 use RuntimeException;
+use DOMDocument;
 
 /**
  * GROW chart api XML client
@@ -141,5 +142,24 @@ class Client extends AbstractClient
             sprintf('/xml/pregnancy/%s/measurement/%s', $growchartid, $measurementuuid)
         );
         return $this->doRequest($url, $measurement->getXmlPayload(), 'PUT');
+    }
+
+    /**
+     * @param Pregnancy[] $pregnancies
+     */
+    public function registerPregnancies($pregnancies)
+    {
+
+        $xml = new DOMDocument();
+        $xml->encoding = 'utf-8';
+        $pregxml = $xml->createElement('pregnancies');
+        $xml->appendChild($pregxml);
+        foreach ($pregnancies as $pregnancy) {
+            $pregnancy->arrayToXml($pregnancy, 'pregnancy', $pregxml);
+        }
+
+        $xml->formatOutput = true;
+        echo $xml->saveXML();
+        exit;
     }
 }

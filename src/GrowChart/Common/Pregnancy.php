@@ -3,6 +3,8 @@
 namespace GrowChart\Common;
 
 use DOMDocument;
+use SoapVar;
+use SoapParam;
 
 class Pregnancy extends AbstractCommon
 {
@@ -263,5 +265,18 @@ class Pregnancy extends AbstractCommon
             $items[] = $item->toArray();
         }
         return json_encode($items);
+    }
+
+    public function toSoapParam()
+    {
+        return new SoapParam(
+            new SoapVar(
+                $this->getItems(),
+                SOAP_USE_XSI_ARRAY_TYPE,
+                "pregnancies",
+                "http://www.w3.org/2001/XMLSchema"
+            ),
+            "pregnancies"
+        );
     }
 }

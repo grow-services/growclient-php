@@ -124,4 +124,8 @@ class Client extends AbstractClient
     {
         return $this->call('updateMeasurement', $measurement->getSoapParams());
     }
+
+    public function registerPregnancies($pregnancies)
+    {
+    }
 }

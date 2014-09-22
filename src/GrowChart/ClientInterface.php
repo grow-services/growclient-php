@@ -37,4 +37,6 @@ interface ClientInterface
     public function removeMeasurement($growchartid, $measurementuuid);
 
     public function updateMeasurement(Measurement $measurement);
+
+    public function registerPregnancies($pregnancies);
 }
