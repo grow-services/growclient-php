@@ -149,17 +149,16 @@ class Client extends AbstractClient
      */
     public function registerPregnancies($pregnancies)
     {
-
         $xml = new DOMDocument();
         $xml->encoding = 'utf-8';
-        $pregxml = $xml->createElement('pregnancies');
-        $xml->appendChild($pregxml);
-        foreach ($pregnancies as $pregnancy) {
-            $pregnancy->arrayToXml($pregnancy, 'pregnancy', $pregxml);
-        }
-
         $xml->formatOutput = true;
-        echo $xml->saveXML();
-        exit;
+        $pregnanciesNode = $xml->createElement('pregnancies');
+        $xml->appendChild($pregnanciesNode);
+        foreach ($pregnancies as $pregnancy) {
+            $pregnancy->toXml($pregnanciesNode);
+        }
+        $url = $this->buildQuery('/xml/pregnancy/');
+
+        return $this->doRequest($url, $xml->saveXML(), 'POST');
     }
 }

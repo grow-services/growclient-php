@@ -2,9 +2,8 @@
 
 namespace GrowChart\Common;
 
-use DOMDocument;
-use SoapVar;
 use SoapParam;
+use SoapVar;
 
 class Pregnancy extends AbstractCommon
 {
@@ -265,6 +264,40 @@ class Pregnancy extends AbstractCommon
             $items[] = $item->toArray();
         }
         return json_encode($items);
+    }
+
+
+    /**
+     * Convert Pregnancy to xml tree.
+     *
+     * @param \DOMElement $dom
+     */
+    public function toXml(\DOMElement $dom)
+    {
+        $pregnancyNode = new \DOMElement('pregnancy');
+        $dom->appendChild($pregnancyNode);
+
+        foreach ($this->toArray() as $k => $v) {
+            if (!is_array($v)) {
+                $v && $pregnancyNode->appendChild(new \DOMElement($k, $v));
+            } else {
+                $subNode = new \DOMElement($k);
+                $pregnancyNode->appendChild($subNode);
+                foreach ($v as $subk => $subv) {
+                    if (is_array($subv)) {
+                        $itemNodeName = $k === 'babies' ? 'baby' : 'meansurement';
+                        $itemNode = new \DOMElement($itemNodeName);
+                        $subNode->appendChild($itemNode);
+                        foreach ($subv as $key => $value) {
+                            $value && $itemNode->appendChild(new \DOMElement($key, $value));
+                        }
+                    } else {
+                        $subv && $subNode->appendChild(new \DOMElement($subk, $subv));
+                    }
+                }
+            }
+        }
+
     }
 
     public function toSoapParam()
