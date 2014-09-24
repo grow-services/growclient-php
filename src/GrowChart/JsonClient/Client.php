@@ -145,8 +145,18 @@ class Client extends AbstractClient
         return $this->doRequest($url, $measurement->toJson(), 'PUT');
     }
 
+    /**
+     * @param Pregnancy[] $pregnancies
+     * @return \stdClass
+     */
     public function registerPregnancies($pregnancies)
     {
-
+        $url = $this->buildQuery('/v2/pregnancy/');
+        foreach ($pregnancies as $item) {
+            $items[] = $item->toArray();
+        }
+        $data = json_encode($items);
+        $res = $this->doRequest($url, $data, 'POST');
+        return $res;
     }
 }

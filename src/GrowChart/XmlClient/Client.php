@@ -145,7 +145,10 @@ class Client extends AbstractClient
     }
 
     /**
+     * Register pregnancies.
+     *
      * @param Pregnancy[] $pregnancies
+     * @return mixed
      */
     public function registerPregnancies($pregnancies)
     {
