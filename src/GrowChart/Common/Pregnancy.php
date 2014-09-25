@@ -16,6 +16,7 @@ class Pregnancy extends AbstractCommon
     public $parity = 0;
     public $ethnicity;
     public $requestdate = null;
+    public $growversion;
 
     /**
      * @var Birth
@@ -44,6 +45,11 @@ class Pregnancy extends AbstractCommon
      * @var Chart
      */
     private $chart;
+
+    /**
+     * @var Baby[]
+     */
+    private $previousbabies;
 
 
     public function getGrowchartid()
@@ -103,7 +109,8 @@ class Pregnancy extends AbstractCommon
 
     public function setGrowchartversion($growchartversion)
     {
-        $this->growchartversion = $growchartversion;
+        $this->growchartversion = $this->growversion = $growchartversion;
+
     }
 
     public function setEdd($edd)
@@ -131,7 +138,7 @@ class Pregnancy extends AbstractCommon
      */
     public function setBabies($babies)
     {
-        $this->babies = $babies;
+        $this->babies = $this->previousbabies = $babies;
     }
 
     /**

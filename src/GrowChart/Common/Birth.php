@@ -7,6 +7,7 @@ class Birth extends AbstractCommon
     public $growchartid;
     public $babydob;
     public $birthweight;
+    public $babyweight;
     public $babygender;
     public $antenataliugrdetection;
     public $suspected;
@@ -60,7 +61,7 @@ class Birth extends AbstractCommon
 
     public function setBirthweight($birthweight)
     {
-        $this->birthweight = $birthweight;
+        $this->birthweight = $this->babyweight = $birthweight;
     }
 
     public function setBabygender($babygender)

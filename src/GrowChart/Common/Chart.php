@@ -16,8 +16,13 @@ class Chart extends AbstractCommon
     public $growchartid;
     public $reference;
     public $displayp95line = false;
+    public $display_p95_line = false;
+
     public $gridlinebyweight = false;
+    public $grid_line_by_weight = false;
+
     public $grayscale = false;
+    public $gray_scale = false;
 
     private static $supportedLanguage = array('en_UK', 'zh_CN', 'nl_NL');
 
@@ -147,21 +152,21 @@ class Chart extends AbstractCommon
     
     public function displayP95Line()
     {
-        $this->displayp95line = 'true';
+        $this->display_p95_line = $this->displayp95line = 'true';
     }
     
     public function hideP95Line()
     {
-        $this->displayp95line = false;
+        $this->display_p95_line = $this->displayp95line = false;
     }
     
     public function gridLineByWeight()
     {
-        $this->gridlinebyweight = 'true';
+        $this->grid_line_by_weight = $this->gridlinebyweight = 'true';
     }
     
     public function grayScale()
     {
-        $this->grayscale = 'true';
+        $this->gray_scale = $this->grayscale = 'true';
     }
 }

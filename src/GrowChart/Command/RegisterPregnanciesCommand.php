@@ -57,11 +57,13 @@ class RegisterPregnanciesCommand extends Command
         $baby = new Baby();
         $baby->setBabygender('M');
         $baby->setBabynr(1);
+        $baby->setBabyName('Test baby');
         $babies = array($baby, $baby);
 
         $preg->setBabies($babies);
 
         $pregnancies = array($preg, $preg);
-        $this->client->registerPregnancies($pregnancies);
+        $res = $this->client->registerPregnancies($pregnancies);
+        print_r($res);
     }
 }

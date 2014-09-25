@@ -12,6 +12,7 @@ class Baby extends AbstractCommon
     public $birthheight;
     public $babygender;
     public $babyname;
+    public $name;
     public $babynr;
     public $previousgrowchartid;
     protected $rootName = 'baby';
@@ -111,7 +112,7 @@ class Baby extends AbstractCommon
 
     public function setBabyName($babyname)
     {
-        $this->babyname = $babyname;
+        $this->babyname = $this->name = $babyname;
     }
 
     public function getBabynr()

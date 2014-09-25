@@ -23,8 +23,9 @@ use stdClass;
 class Client extends AbstractClient
 {
     private $soapClient = null;
+    private $wsdl;
 
-    public function call($function_name, $arguments)
+    public function call($function_name, $arguments, $classmap = array())
     {
         if (!$this->soapClient) {
             $baseUrl = $this->getBaseUrl();
@@ -32,7 +33,11 @@ class Client extends AbstractClient
             $this->soapClient = new SoapClient($this->wsdl, array(
                 'cache_wsdl'   => 0,
                 'soap_version' => SOAP_1_2,
-                'trace'        => $this->debug
+                'trace'        => $this->debug,
+                'classmap'     => array(
+                    'PregnancyInfo' => 'GrowChart\\Common\\PregnancyMap',
+                    'CentileData' => 'GrowChart\\Common\\DataCentile'
+                )
             ));
 
             $authHeader = new stdClass();
@@ -125,7 +130,14 @@ class Client extends AbstractClient
         return $this->call('updateMeasurement', $measurement->getSoapParams());
     }
 
+    /**
+     * @param Pregnancy[] $pregnancies
+     * @return mixed
+     */
     public function registerPregnancies($pregnancies)
     {
+        $query = new stdClass();
+        $query->pregnancies = $pregnancies;
+        return $this->call('registerPregnancies', $query);
     }
 }
