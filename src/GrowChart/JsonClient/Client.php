@@ -34,9 +34,9 @@ class Client extends AbstractClient
     public function registerPregnancy(Pregnancy $pregnancy)
     {
         $url = $this->buildQuery('/v2/pregnancy/');
-        $res = $this->doRequest($url, $pregnancy->toJson(), 'POST');
-
-        return $res;
+        $data = json_encode($pregnancy->toArray());
+        $res = $this->doRequest($url, $data, 'POST');
+        return $res->growchartid;
     }
 
     public function addMeasurement(Measurement $measurement)
@@ -44,9 +44,7 @@ class Client extends AbstractClient
         $url = $this->buildQuery(
             sprintf('/v2/pregnancy/%s/measurements', $measurement->getGrowchartid())
         );
-
         return $this->doRequest($url, $measurement->toJson());
-
     }
 
     public function getChartImage(Chart $chart, $filename = null)
@@ -151,7 +149,7 @@ class Client extends AbstractClient
      */
     public function registerPregnancies($pregnancies)
     {
-        $url = $this->buildQuery('/v2/pregnancy/');
+        $url = $this->buildQuery('/v2/pregnancies/');
         foreach ($pregnancies as $item) {
             $items[] = $item->toArray();
         }

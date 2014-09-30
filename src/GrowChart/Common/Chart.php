@@ -23,6 +23,7 @@ class Chart extends AbstractCommon
 
     public $grayscale = false;
     public $gray_scale = false;
+    public $url;
 
     private static $supportedLanguage = array('en_UK', 'zh_CN', 'nl_NL');
 
