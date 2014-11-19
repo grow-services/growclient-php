@@ -1,6 +1,6 @@
 <?php
 
-namespace GrowServices;
+namespace GrowChart;
 
 /**
  * GROW  config
