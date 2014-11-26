@@ -33,7 +33,7 @@ class Client extends AbstractClient
 
     public function registerPregnancy(Pregnancy $pregnancy)
     {
-        $url = $this->buildQuery('/v2/pregnancy/');
+        $url = $this->buildQuery('/json/pregnancy/');
         $data = json_encode($pregnancy->toArray());
         $res = $this->doRequest($url, $data, 'POST');
         return $res->growchartid;
@@ -42,7 +42,7 @@ class Client extends AbstractClient
     public function addMeasurement(Measurement $measurement)
     {
         $url = $this->buildQuery(
-            sprintf('/v2/pregnancy/%s/measurements', $measurement->getGrowchartid())
+            sprintf('/json/pregnancy/%s/measurements', $measurement->getGrowchartid())
         );
         return $this->doRequest($url, $measurement->toJson());
     }
@@ -50,7 +50,7 @@ class Client extends AbstractClient
     public function getChartImage(Chart $chart, $filename = null)
     {
         $url = $this->buildQuery(
-            sprintf('/v2/pregnancy/%s/chartimage', $chart->getGrowchartid())
+            sprintf('/json/pregnancy/%s/chartimage', $chart->getGrowchartid())
         );
 
         $res = $this->doRequest($url, $chart->toJson());
@@ -65,7 +65,7 @@ class Client extends AbstractClient
     public function registerBirth(Birth $birth)
     {
         $url = $this->buildQuery(
-            sprintf('/v2/pregnancy/%s/birth', $birth->getGrowchartid())
+            sprintf('/json/pregnancy/%s/birth', $birth->getGrowchartid())
         );
 
         $res = $this->doRequest($url, $birth->toJson());
@@ -75,7 +75,7 @@ class Client extends AbstractClient
     public function registerBaby(Baby $baby)
     {
         $url = $this->buildQuery(
-            sprintf('/v2/pregnancy/%s/baby', $baby->getGrowchartid())
+            sprintf('/json/pregnancy/%s/baby', $baby->getGrowchartid())
         );
 
         return $this->doRequest($url, $baby->toJson());
@@ -84,7 +84,7 @@ class Client extends AbstractClient
     public function getData($growchartid, $requestdate = null, $weight = null)
     {
         $url = $this->buildQuery(
-            sprintf('/v2/pregnancy/%s/actions/getdata', $growchartid),
+            sprintf('/json/pregnancy/%s/actions/getdata', $growchartid),
             array(
                 'requestdate' => $requestdate,
                 'birthweight' => $weight
@@ -97,7 +97,7 @@ class Client extends AbstractClient
     public function getPDF(ChartPdf $chartpdf, $filename = null)
     {
         $url = $this->buildQuery(
-            sprintf('/v2/pregnancy/%s/chartpdf', $chartpdf->getGrowchartid())
+            sprintf('/json/pregnancy/%s/chartpdf', $chartpdf->getGrowchartid())
         );
         $res = $this->doRequest($url, $chartpdf->toJson());
         $pdfurl = (string) $res->url;
@@ -111,7 +111,7 @@ class Client extends AbstractClient
     public function clearData($growchartid)
     {
         $url = $this->buildQuery(
-            sprintf('/v2/pregnancy/%s/actions/cleardata', $growchartid)
+            sprintf('/json/pregnancy/%s/actions/cleardata', $growchartid)
         );
         return $this->doRequest($url);
     }
@@ -119,7 +119,7 @@ class Client extends AbstractClient
     public function getPregnancy($growchartid)
     {
         $url = $this->buildQuery(
-            sprintf('/v2/pregnancy/%s', $growchartid)
+            sprintf('/json/pregnancy/%s', $growchartid)
         );
         return $res = $this->doRequest($url);
     }
@@ -127,7 +127,7 @@ class Client extends AbstractClient
     public function removeMeasurement($growchartid, $measurementuuid)
     {
         $url = $this->buildQuery(
-            sprintf('/v2/pregnancy/%s/measurement/%s', $growchartid, $measurementuuid)
+            sprintf('/json/pregnancy/%s/measurement/%s', $growchartid, $measurementuuid)
         );
         return $this->doRequest($url, null, 'DELETE');
     }
@@ -137,7 +137,7 @@ class Client extends AbstractClient
         $growchartid = $measurement->getGrowchartid();
         $measurementuuid = $measurement->getUuid();
         $url = $this->buildQuery(
-            sprintf('/v2/pregnancy/%s/measurement/%s', $growchartid, $measurementuuid)
+            sprintf('/json/pregnancy/%s/measurement/%s', $growchartid, $measurementuuid)
         );
 
         return $this->doRequest($url, $measurement->toJson(), 'PUT');
@@ -149,7 +149,7 @@ class Client extends AbstractClient
      */
     public function registerPregnancies($pregnancies)
     {
-        $url = $this->buildQuery('/v2/pregnancies/');
+        $url = $this->buildQuery('/json/pregnancies/');
         foreach ($pregnancies as $item) {
             $items[] = $item->toArray();
         }
