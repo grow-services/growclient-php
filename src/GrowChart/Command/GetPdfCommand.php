@@ -12,7 +12,7 @@ use Exception;
 
 /**
  * Get chart pdf demo.
- * 
+ *
  * @author Cong Peijun <p.cong@linkorb.com>
  */
 class GetPdfCommand extends Command
@@ -69,7 +69,7 @@ class GetPdfCommand extends Command
         $babygender = $dialog->select(
             $output,
             '<info>Please entry the baby gender(M):</info>',
-            array('M' => 'Male' , 'F' => 'Female'),
+            array('M' => 'Male', 'F' => 'Female'),
             'M'
         );
 

@@ -4,7 +4,6 @@ namespace GrowChart\Common;
 
 class Baby extends AbstractCommon
 {
-
     public $growchartid;
     public $babydob;
     public $birthgestation;

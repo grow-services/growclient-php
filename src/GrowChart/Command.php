@@ -48,6 +48,5 @@ class Command extends SymfonyCommand
             $output->writeln('<error>' . $ex->getMessage() . '</error>');
             exit;
         }
-        
     }
 }

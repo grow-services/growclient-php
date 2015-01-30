@@ -10,7 +10,6 @@ use GrowChart\Common\Chart;
 
 class GetImageCommand extends Command
 {
-
     protected function configure()
     {
         parent::configure();

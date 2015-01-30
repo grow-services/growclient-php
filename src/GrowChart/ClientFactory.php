@@ -11,10 +11,9 @@ use RuntimeException;
  */
 class ClientFactory
 {
-
     /**
      * Factory instance
-     * @var ClientFactory 
+     * @var ClientFactory
      */
     private static $instance = null;
     
@@ -29,12 +28,11 @@ class ClientFactory
     
     private function __construct()
     {
-        
     }
 
     /**
      * Get ClientFactroy instance
-     * 
+     *
      * @return ClientFactory
      */
     public static function getInstance()
@@ -48,7 +46,7 @@ class ClientFactory
 
     /**
      * Get grow client.
-     * 
+     *
      * @param string $clientType
      * @param string $apikey
      * @param string $apisecret

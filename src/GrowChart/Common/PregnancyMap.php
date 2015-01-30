@@ -5,7 +5,6 @@
 
 namespace GrowChart\Common;
 
-
 class PregnancyMap
 {
     public $growchartid;

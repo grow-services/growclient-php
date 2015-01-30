@@ -11,7 +11,7 @@ use GrowChart\Common\Pregnancy;
 
 /**
  * The grow client intreface.
- * 
+ *
  * @author Cong Peijun <p.cong@linkorb.com>
  */
 interface ClientInterface

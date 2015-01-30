@@ -9,7 +9,6 @@ use DOMDocument;
  */
 abstract class AbstractCommon
 {
-
     protected $rootName = 'root';
 
     abstract protected function toArray();

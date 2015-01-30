@@ -7,7 +7,6 @@ use SoapVar;
 
 class Pregnancy extends AbstractCommon
 {
-
     public $growchartid;
     public $maternalheight;
     public $maternalweight;
@@ -110,7 +109,6 @@ class Pregnancy extends AbstractCommon
     public function setGrowchartversion($growchartversion)
     {
         $this->growchartversion = $this->growversion = $growchartversion;
-
     }
 
     public function setEdd($edd)
@@ -304,7 +302,6 @@ class Pregnancy extends AbstractCommon
                 }
             }
         }
-
     }
 
     public function toSoapParam()

@@ -19,7 +19,6 @@ use DOMDocument;
  */
 class Client extends AbstractClient
 {
-
     public function addMeasurement(Measurement $measurement)
     {
         $res = $this->doRequest(

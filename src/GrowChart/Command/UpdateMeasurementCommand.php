@@ -11,7 +11,6 @@ use Exception;
 
 class UpdateMeasurementCommand extends Command
 {
-
     protected function configure()
     {
         parent::configure();

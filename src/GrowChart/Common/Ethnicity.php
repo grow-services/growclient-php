@@ -9,7 +9,6 @@ namespace GrowChart\Common;
  */
 class Ethnicity
 {
-
     private static $ethnicity = array(
         'Dutch',
         'Dutched mixed',

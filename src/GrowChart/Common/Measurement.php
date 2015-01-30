@@ -7,7 +7,6 @@ use InvalidArgumentException;
 
 class Measurement extends AbstractCommon
 {
-
     public $growchartid;
     public $uuid;
     public $value;
@@ -96,8 +95,6 @@ class Measurement extends AbstractCommon
             $m['uuid'] = $uuid;
         }
         return $m;
-
-
     }
 
     public function toJson()

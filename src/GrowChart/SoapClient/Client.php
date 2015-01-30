@@ -102,7 +102,6 @@ class Client extends AbstractClient
     public function registerBirth(Birth $birth)
     {
         return $this->call('registerBirth', $birth->getSoapParams());
-        
     }
 
     public function clearData($growchartid)

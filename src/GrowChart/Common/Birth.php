@@ -20,7 +20,7 @@ class Birth extends AbstractCommon
             'birthweight'            => $this->birthweight,
             'babygender'             => $this->babygender,
             'antenataliugrdetection' => $this->antenataliugrdetection,
-	        'suspected'		         => $this->suspected,
+            'suspected'                 => $this->suspected,
         );
     }
     
@@ -76,11 +76,11 @@ class Birth extends AbstractCommon
 
     public function setSuspected($suspected)
     {
-	$this->suspected = $suspected;
+        $this->suspected = $suspected;
     }
 
     public function getSuspected()
     {
-	return $this->suspected;
+        return $this->suspected;
     }
 }

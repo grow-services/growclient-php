@@ -2,7 +2,6 @@
 
 namespace GrowChart\Command;
 
-
 use GrowChart\ClientFactory;
 use GrowChart\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -37,5 +36,4 @@ class RemoveMeasurementCommand extends Command
 
         $output->writeln($result);
     }
-
-} 
+}

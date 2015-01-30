@@ -4,7 +4,7 @@ namespace GrowChart;
 
 /**
  * GROW  config
- * 
+ *
  * @author Cong Peijun <p.cong@linkorb.com>
  */
 class Config
@@ -586,4 +586,3 @@ class Config
         return $ethnicity;
     }
 }
-
