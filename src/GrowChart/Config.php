@@ -57,7 +57,7 @@ class Config
                 ),
                 array(
                     'code' => 8,
-                    'label' => 'Asian (Nth, Cent); Middle East',
+                    'label' => 'Asian (Nth, Cent) / Middle East',
                     'label_cn' => '亚洲 (Nth, Cent); 中东',
                     'label_nl' => 'Overig Aziatisch'
                 ),
